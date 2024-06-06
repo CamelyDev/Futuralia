@@ -1,0 +1,9 @@
+{
+  "extensionId": {
+    "name": "HeartBeast_Platform_Movement_Engine",
+    "path": "extensions/HeartBeast_Platform_Movement_Engine/HeartBeast_Platform_Movement_Engine.yy"
+  },
+  "resourceVersion": "1.0",
+  "resourceType": "GMExtensionConfigSet",
+  "configurables": null
+}

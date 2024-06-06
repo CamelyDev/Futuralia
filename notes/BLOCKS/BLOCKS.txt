@@ -1,0 +1,26 @@
+Dirt
+Grass
+Stone
+Planks
+Quartz
+Emerald
+Citrine
+Diamond
+Amethyst
+Onyx
+Ruby
+Sapphire
+Jasper
+TigersEye
+Sugilite
+Wood Planks
+Wood Slab Up
+Wood Slab Down
+Wood Slab Left
+Wood Slab Right
+Wood Wall
+Wood Chair Left
+Wood Chair Right
+Wood Table
+
+(188 alpha for walls)

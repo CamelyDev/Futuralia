@@ -1,0 +1,58 @@
+skill tree:
+
+Root:
+Patience
+	Melee
+		Sword
+			Sword Agility
+				Sword Speed
+					Hand Skill
+				Sword Power
+				Sword Swiftness
+			Sword Strength
+				Sword Damage
+					Sword Rate
+				Sword Hit
+					Sword Crit
+		Axe
+			Axe Agility
+				Axe Blocking
+					Rocky Hands
+				Axe Rate
+					Fast Biceps
+			Axe Strength
+				Axe Damage
+					Axe Rate
+				Axe Hit
+					Axe Crit
+				Axe Dodge (0.0.5)
+		Trident (0.0.7)
+		Shield
+			Shield Blocking
+				Double Wielding
+		Curved Sword (0.1.0?)
+	Ranged (0.0.5)
+		Bow (0.0.5)
+		Spear (0.0.6)
+		Crossbow (0.0.5)
+		Gun (0.0.7)
+		Armory (0.0.6)
+Inteligence (0.0.9)
+	Summon (0.0.9)
+	Magic (0.1.0)
+	Psychological (0.2.0?)
+
+Ultimatums:
+- Ultimate Sword Strength [14]: Requires 11 and 13.
+- Ultimate Sword Agility [8]: Requires 5, 6 and 7.
+- Ultimate Sword Warrior [15]: Requires 8 and 14.
+- Ultimate Axe Warrior [27]: Requires 26, 24, 21 and 19.
+- Legendary Axe Knight [31]: Requires 27 and 30.
+- Legendary Sword Knight [32]: Requirees 15 and 30.
+- Mythical King [33]: Requires 32 and 31.
+
+1. finish skill tree ---- WIP
+2. iota everything before it's too late
+3. Make every block preserve its breaking state and regen if time passes --- DONE
+4. Make the Info-On-Screen display a list of stuff instead of drawing directly
+5. finish the goddamn menu ---- WIP

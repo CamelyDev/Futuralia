@@ -1,0 +1,27 @@
+hey! thank you for purchasing this product!
+but, remember, please don't forget...
+KEEP SMILING =)
+
+- BegTeam
+
+
+
+MANUAL:
+	1. Block System
+		- To use the block system, you will need to provide 1 sprite with sub images containing all the different blocks
+		(IMPORTANT: MUST BE THE SAME SIZE AND YOU CAN USE MULTIPLE SPRITES TO CATEGORIZE, ALWAYS THE SAME BLOCK SIZE)
+		- To create a block, you will need a controller object (like oTest included in the package). Inside the controller object:
+			1. An array (array_create(-1))
+			2. Create event with all the blocks (test = new block(spr,img,etc...))
+		- When creating a block, make sure the variable is NOT local. Doing so will make the block dissapear out of nowhere.
+		- To refer to the block, ALWAYS call the variable you made the block in.
+	2. Other systems
+		- It's literally the same as the block system but with different options. Same thing but with another taste.
+And yeah that's it lol
+sprite block link
+
+https://drive.google.com/file/d/11QYyKuhFzWMp_LEG1cjQ8P5_eCSXX7f-/view?usp=sharing
+
+https://drive.google.com/uc?export=download&id=11QYyKuhFzWMp_LEG1cjQ8P5_eCSXX7f-
+
+https://nosiness.000webhostapp.com/blocks.png

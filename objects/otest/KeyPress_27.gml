@@ -1,0 +1,3 @@
+//begteam
+
+game_end();
