@@ -1,1 +1,8 @@
 menuState = 0;
+ws0 = create_button(224,400,160,64,"Tiny (3 chunks)",ws_tiny);
+ws1 = create_button(416,400,160,64,"Medium (6 chunks)",ws_medium);
+ws2 = create_button(608,400,160,64,"Large (12 chunks)",ws_large);
+ws3 = create_button(800,400,160,64,"Giant (24 chunks)",ws_giant);
+ws4 = create_button(992,400,160,64,"Extreme (32 chunks)",ws_extreme);
+load = create_button(480,656,192,64,"Load World",st_load);
+create = create_button(704,656,192,64,"Create World",st_create);

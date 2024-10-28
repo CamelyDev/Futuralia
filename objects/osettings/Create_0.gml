@@ -21,14 +21,13 @@ enum DF {
 	easy,
 	medium,
 	hard,
-	insane,
-	impossible
+	insane
 }
 settingsArray[ST.size] = WS.tiny;
 settingsArray[ST.diff] = DF.peaceful;
 maxx = [];
 maxx[ST.size] = 5;
-maxx[ST.diff] = 6;
+maxx[ST.diff] = 5;
 selector = 0;
 subselected = false;
 str = [];

@@ -1,13 +1,12 @@
 //begteam
-enum BT {
-	PASSABLE,
-	SOLID,
-	SLABUP,
-	SLABDOWN,
-	SLABLEFT,
-	SLABRIGHT
-}
+//persistentObjectId = -1  //the identifier of this. Its set init to -1 but is a positive integer
+//roomId = -1;
+//persistentObjectProperties = 
+//json_stringify({
+//	//this struct will automatically update when this persistent object is 
+//	// changed on the server
 
+//})
 
 block_radius = 4;
 magic_number = 32;
@@ -21,3 +20,8 @@ blocktype = BT.SOLID
 tilemap_lel = undefined
 
 input_amount = 0;
+input_hue = 0;
+input_saturation = 0;
+
+isCollision = true;
+alarm[1] = 1;

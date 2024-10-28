@@ -75,7 +75,7 @@ playerclock.Update();
 //	}
 //}
 
-image_speed = msp / 2.5;
+image_speed = msp / 2;
 
 //if (rotation < 60) or (rotation > 120 and rotation < 240) or (rotation > 300) {
 //	canrotdraw = true;
@@ -159,14 +159,14 @@ oCameraPoint.y = _yy;
 //msp = clamp(msp,2.1,3.9);
 if (x > finalWorldSize*CHUNKSIZE*BS) {
 	x = xprevious;
-	show_message("You have reached the limit of the world!\nPlease don't go further. Thanks!")
+	//show_message("You have reached the limit of the world!\nPlease don't go further. Thanks!")
 }
 if (x < 0) {
 	x = xprevious;
-	show_message("You have reached the limit of the world!\nPlease don't go further. Thanks!")
+	//show_message("You have reached the limit of the world!\nPlease don't go further. Thanks!")
 }
-position.x = x div BS;
-position.y = y div BS;
+position.x = round(x / BS);
+position.y = round(y / BS);
 
 
 //light calculation
@@ -199,7 +199,7 @@ position.y = y div BS;
 //	}
 //}
 
-layer_background_alpha(layer_background_get_id("Dark_Night"),abs(((show_tm/255)*-1)+1))
+layer_background_alpha(layer_background_get_id("Dark_Night"),night_tm/255)
 
 global.sharedProperties = {
 	_player_pos : new vector2(x,y),

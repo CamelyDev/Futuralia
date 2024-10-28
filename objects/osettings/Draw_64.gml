@@ -1,8 +1,9 @@
 //begteam
 
-//draw_set_font(fnt1);
-//draw_set_color(c_red);
-//draw_text(600,0,"SETTINGS\nChange with left and right arrows,\nselect with down and up arrow.\nENTER to LOAD.\nSHIFT to CREATE.");
+draw_set_font(fnt1);
+draw_set_color(c_red);
+draw_set_halign(fa_center);
+draw_text(684,0,"FUTURALIA");
 
 //switch(subselected) {
 //	default:

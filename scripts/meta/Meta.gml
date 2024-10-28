@@ -1,6 +1,11 @@
 //begteam
 #macro GMSPD 60
 
+function image_id(_sprite,_index) constructor {
+	sprite_index = _sprite;
+	image_index = _index;
+}
+
 function vector2(_x,_y) constructor {
 	x = _x;
 	y = _y;
@@ -14,6 +19,49 @@ function sort_func(a,b) {
 	return a > b;
 }
 
+function item_table(tile_to_place,drop_item) constructor {
+	til = tile_to_place;
+	drp = drop_item;
+	
+	static Copy = function() {
+		return new item_table(til,drp);
+	}
+}
+
+function block_table(display_name,tool_needed,id_image,resistance,block_type) constructor {
+	nam = display_name;
+	tln = tool_needed;
+	img = id_image;
+	res = resistance;
+	blt = block_type;
+	
+	static Copy = function() {
+		return new block_table(nam,tln,img,res,blt);
+	}
+}
+
+function tool_table(tool_type,tool_speed,tool_durability,tool_power,tool_place) constructor {
+	tl_type = tool_type;
+	tl_speed = tool_speed;
+	tl_durability = tool_durability;
+	tl_power = tool_power;
+	tl_place = tool_place;
+	
+	static Copy = function() {
+		return new tool_table(tl_type,tl_speed,tl_durability,tl_power,tl_place);
+	}
+}
+
+function player_table(score_struct,inventory_struct,player_struct) constructor {
+	scr = score_struct;
+	inv = inventory_struct;
+	plr = player_struct;
+	
+	static Copy = function() {
+		return new player_table(scr,inv,plr);
+	}
+}
+
 function head_state(headSpr,stateIndex,attachPoint,flipValue,rotationValue) constructor {
 	_spr = headSpr
 	_state = stateIndex
@@ -22,43 +70,30 @@ function head_state(headSpr,stateIndex,attachPoint,flipValue,rotationValue) cons
 	_rot = rotationValue
 }
 
-function item_a(name_item,sprindex,imgindex,extra) constructor {
+function item_a(name_item,sprindex,imgindex,reference) constructor {
 	name = name_item;
 	spr = sprindex;
 	img = imgindex;
-	ext = {
-		func1 : undefined,
-		func2 : undefined,
-		func3 : undefined,
-		func4 : undefined,
-		tile : undefined,
-		tools : undefined,
-		drop : undefined,
-		sol : undefined
-	}
-	extr = extra;
-	if extra != undefined {
-		if extra.function1 != undefined {
-			ext.func1 = extra.function1;
-		} 
-		if extra.function2 != undefined {
-			ext.func2 = extra.function2;
-		} 
-		if extra.function3 != undefined {
-			ext.func3 = extra.function3;
-		} 
-		if extra.function4 != undefined {
-			ext.func4 = extra.function4;
-		} 
-		if extra.tilePlace != undefined {
-			ext.tile = extra.tilePlace;
-		} 
-		if extra.toolDone != undefined {
-			ext.tools = extra.toolDone;
-		}
-	}
+	ref = reference;
 	static Copy = function() {
-		return new item_a(name,spr,img,extr);
+		return new item_a(name,spr,img,ref);
+	}
+}
+
+function ref_item(ref_image,ref_tooltable,ref_itemtable) constructor {
+	img = ref_image;
+	ttl = ref_tooltable;
+	itl = ref_itemtable;
+	static Copy = function() {
+		return new ref_item(img,ttl,itl);
+	}
+}
+
+function ref_block(ref_image,ref_blocktable) constructor {
+	img = ref_image;
+	btl = ref_blocktable;
+	static Copy = function() {
+		return new ref_block(img,btl);
 	}
 }
 
@@ -137,14 +172,13 @@ function tool(name,toolMode,toolPower,toolSpeed,extra) constructor {
 	}
 }
 
-function block(name,sprindex,imgindex,resistance,mintool,position,blocktype) constructor {
+function block(name,tile_table,imgindex,resistance,position,blocktype) constructor {
 	nm = name;
-	spr = sprindex;
+	tlt = tile_table;
 	img = imgindex;
 	res = resistance;
-	minpow = mintool;
 	pos = position;
-	bt = blocktype
+	bt = blocktype;
 	//ext = {
 	//	func1 : undefined,
 	//	func2 : undefined,
@@ -178,7 +212,7 @@ function block(name,sprindex,imgindex,resistance,mintool,position,blocktype) con
 		
 	//}
 	static Copy = function() {
-		return new block(nm,spr,img,res,minpow,pos,bt);
+		return new block(nm,tlt,img,res,pos,bt);
 	}
 }
 
@@ -196,10 +230,11 @@ function region(name,index,arr,wrld) constructor {
 	worldon = wrld;
 }
 
-function world(name,index,arr) constructor {
+function world(name,index,arr,randseed) constructor {
 	nm = name;
 	ind = index;
 	regions = arr;
+	seed = randseed;
 }
 function arrayHas(array_to_search, value_to_find) {
 	var searchArray = array_to_search;

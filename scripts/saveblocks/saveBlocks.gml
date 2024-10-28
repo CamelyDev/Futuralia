@@ -1,10 +1,12 @@
 //begteam
 function saveStructs() {
 	var p = 0;
+	var str = "";
 	var fna = file_text_open_write(argument[0]);
 	for (var i = 1; i < argument_count; ++i) {
 		var j = json_stringify(argument[i]);
 		var k = i;
+		str += j;
 		file_text_write_string(fna,j);
 		file_text_writeln(fna);
 		p++;

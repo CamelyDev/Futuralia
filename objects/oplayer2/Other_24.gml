@@ -1,5 +1,5 @@
 //----MAIN VARIABLES----
-
+mask_index = sPlayerMask;
 var mx, my;
 mx = main_cam.get_mouse_x();
 my = main_cam.get_mouse_y();
@@ -18,34 +18,35 @@ mov = key_right + -key_left;
 hsp = mov * msp;
 if (vsp<10) vsp += grav;
 
-if (place_meeting(x,y+1,[oCol])){
+//finalhsp = BS*sign(hsp);
+//Jumping
+if (collision_check(x,y+1,oSolid)){
 	jumping = false;
 	vsp = key_jump_held * -jsp
 }
 if (vsp < 0) && (!key_jump_held) vsp = max(vsp,-jsp/4)
 //Horizontal Collision
-if (place_meeting(x+hsp,y,[oCol])){
-while(!place_meeting(x+sign(hsp),y,[oCol])){
-x+=sign(hsp)
-}
-hsp=0;
+if (collision_check(x+hsp,y,oSolid)){
+	while(!collision_check(x+sign(hsp),y,oSolid)){
+		x+=sign(hsp)
+	}
+	hsp=0;
 }
 x += hsp;
 //Vertical Collision
-if (place_meeting(x,y+vsp,[oCol])){
-while(!place_meeting(x,y+sign(vsp),[oCol])){
-y+=sign(vsp)
+if (collision_check(x,y+vsp,oSolid)){
+	while(!collision_check(x,y+sign(vsp),oSolid)){
+		y+=sign(vsp)
+	}
+	vsp=0;
 }
-vsp=0;
-}
-y += vsp;
+y += vsp
 
 //----IMAGE----
 
 if (key_jump_held) jumping = true;
-var imagescale = -sign(x - mx);
+imagescale = -sign(x - mx);
 if (imagescale != 0) {
-	image_xscale = imagescale
 	if (rotated = true) {
 		_imagey = imagescale;
 	} else {
@@ -56,7 +57,7 @@ if (imagescale != 0) {
 //----ROTATION----
 
 var _ang, _diff;
-_ang = point_direction(x,y,mx,my);
+_ang = point_direction(x,y-25,mx,my);
 _diff = angle_difference(_ang,rotation);
 if (rotated) {
 	rotation += _diff * 0.15
@@ -67,9 +68,9 @@ if (rotated) {
 //----SPRITE MANAGEMENT----
 
 if (hsp != 0) {
-	if (hsp > 0) and (image_xscale < 0) {
+	if (hsp > 0) and (imagescale < 0) {
 		msp = 2.1;
-	} else if (hsp < 0) and (image_xscale > 0) {
+	} else if (hsp < 0) and (imagescale > 0) {
 		msp = 2.1;
 	} else {
 		if (key_run) {
@@ -81,7 +82,7 @@ if (hsp != 0) {
 		}
 	}
 	
-	if (vsp == 0) and (place_meeting(x,y+1,[oCol])) {
+	if (vsp == 0) and (collision_check(x,y+1,oSolid)) {
 		sprite_index = sPlayerWalk;
 		headstate = 1;
 		rotated = true;
@@ -95,7 +96,7 @@ if (hsp != 0) {
 		rotated = true;
 	}
 } else {
-	if (vsp == 0) and (place_meeting(x,y+1,[oCol])) {
+	if (vsp == 0) and (collision_check(x,y+1,oSolid)) {
 		sprite_index = sPlayerIdle;
 		headstate = 1;
 		rotated = true;
@@ -145,7 +146,7 @@ if (max_tm) {
 } else {
 	if (show_tm <= 0) {
 		max_tm = true;
-		hold_tm = HOLD_TIME;
+		hold_tm = DECAY_TIME;
 	}
 	
 	if (hold_tm > 0) {
@@ -155,3 +156,6 @@ if (max_tm) {
 		night_tm += TIME_RATE;
 	}
 }
+
+//----EXTRAS----
+mask_index = sPlayerMask;

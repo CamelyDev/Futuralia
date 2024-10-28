@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "IotaGetInput",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "iota",
-    "path": "folders/iota.yy",
+  "$GMScript":"v1",
+  "%Name":"IotaGetInput",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"IotaGetInput",
+  "parent":{
+    "name":"iota",
+    "path":"folders/iota.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -1,0 +1,5 @@
+oSettings values:
+- subselector[ST.*]
+	* size: WS
+	* diff: DF
+- selector

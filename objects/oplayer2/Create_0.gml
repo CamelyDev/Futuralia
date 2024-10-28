@@ -1,20 +1,23 @@
 //initialize wariables
 #macro TIME_RATE 1
-#macro HOLD_TIME 2048
+#macro HOLD_TIME 256
+#macro DECAY_TIME 192
 #macro TIME_OFFSET 255
 instance_create_layer(x,y,"Instances",oCameraPoint);
-
+globalvar light_surface;
+light_surface = surface_create(finalWorldSize*CHUNKSIZE*BS,HEIGHT*BS);
 light = instance_create_layer(x,y,"Instances",oLight)
-light.light_radius = 192;
+light.light_radius = 64;
 light.follow = id;
 
 zoo = 1;
 grav = 0.3;
 hsp = 0;
+finalhsp = 0;
 vsp = 0;
 jsp = 6.3;
 msp = 2.5;
-jumps = 2;
+jumps = 0;
 
 clmp = 0;
 
@@ -24,6 +27,7 @@ if (_inst != noone) {
 	oPlayer2.y = _inst.y;
 }
 y -= HEIGHT * BS;
+isGrounded = false;
 fpi = 1;
 what = true;
 free = false;
@@ -34,6 +38,7 @@ rotation = 0;
 rotdraw = 0;
 canrotdraw = false;
 headstate = 0;
+imagescale = 1;
 position = new vector2(0,-1000);
 _imagey = 1;
 

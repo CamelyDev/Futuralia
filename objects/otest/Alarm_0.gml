@@ -2,8 +2,9 @@
 //begteam
 //plr = instance_create_layer(32,0,"Instances",oPlayer2)
 if (drawing == 0) {
-	if (!file_exists("blocks.ini")) {
+	if (!file_exists("blocks.sav")) {
 		tst_create();
+		CameraClean()
 	}
 }
 drawing = 1;

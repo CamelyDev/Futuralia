@@ -13,4 +13,6 @@ if (file_exists("settings.ini")) {
 	show_debug_message("going to generate world")
 	
 	alarm[0] = 4;
+} else {
+	show_error("Error code 1: Settings file not found",false)
 }

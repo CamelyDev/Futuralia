@@ -1,4 +1,4 @@
-#macro FPI_MAX 10
+#macro FPI_MAX 2
 #macro MAX_BLOCKSELECTOR 10
 
 image_speed = 0;
@@ -8,12 +8,22 @@ fpi = FPI_MAX;
 enum CURSORSTATE {
 	IDLE,
 	CONFIRM,
-	DENY
+	DENY,
+	OOB,
+	DESTROY
 }
+
+fdi = 4;
+dest = 1;
 
 curblock = undefined;
 curselector = 0;
 curstate = CURSORSTATE.IDLE
+curblpos = 0;
+
+//_light = instance_create_layer(x,y,"Instances",oLight);
+//_light.light_radius = 36;
+//_light.follow = id;
 
 //root
 skillname[0] = "Patience";
@@ -116,7 +126,7 @@ skillowned[0] = true;
 				skillneeds[23,0] = 22;
 				skillowned[23] = false;
 					
-					skillname[24] = "Axe Rate";
+					skillname[24] = "Voluntary Force";
 					skillneeds[24,0] = 23;
 					skillowned[24] = false;
 					

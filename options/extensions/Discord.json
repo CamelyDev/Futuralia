@@ -1,0 +1,23 @@
+{
+  "$GMExtensionConfigSet": "GMExtensionConfigSet",
+  "configurables": {
+    "94621621-2cf8-4f3a-af2d-9ac216b1f7ea": null,
+    "e134ef2d-c3eb-4b42-a122-6e188d687799": {
+      "Default": {
+        "value": "E:\\\\discord_game_sdk"
+      }
+    },
+    "41bb8b5a-8156-4801-8daa-1d63a92a633e": null,
+    "ac8085d4-4a6b-4b74-b8fc-3d0d5bfe8788": null,
+    "02bfeaa4-3ad9-41a6-89de-53589996e5b6": null,
+    "91c64cff-21ef-4197-b512-db6e37141d10": null,
+    "36af8a07-65d3-43d9-b96c-826e989e6da9": null,
+    "2a612597-f7c7-40f0-a1ae-17d4a46a6f9a": null,
+    "9fbf9189-0eb4-452e-bdb1-08476a9fa9ef": null,
+    "bbfcb00e-31e9-4aa0-b9a7-cc362524152c": null,
+    "7ed654e9-6841-42d2-82ae-902be5cc1a6d": null,
+    "5321e9d0-efdc-4303-bfe5-031775bddde1": null,
+    "5a08f50f-c384-4017-8588-ebe4d1633bb4": null,
+    "89030162-b8a9-449b-8085-3aaa1c5e5ead": null
+  }
+}

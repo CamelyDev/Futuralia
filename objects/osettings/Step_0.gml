@@ -38,5 +38,4 @@ switch(subselector[ST.diff]) {
 	case DF.medium: str[2] = "Normal."; break;
 	case DF.hard: str[2] = "Hard."; break;
 	case DF.insane: str[2] = "Insane."; break;
-	case DF.impossible: str[2] = "!IMPOSSIBLE! (may break your PC)."; break;
 }

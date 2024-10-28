@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "instance_place_multiple",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Helper Scripts",
-    "path": "folders/Scripts/Helper Scripts.yy",
+  "$GMScript":"v1",
+  "%Name":"instance_place_multiple",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"instance_place_multiple",
+  "parent":{
+    "name":"Helper Scripts",
+    "path":"folders/Scripts/Helper Scripts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

@@ -15,7 +15,7 @@ ini_write_real("Game","Difficulty",finalDifficulty);
 //...............................
 ini_close();
 //||||||||||||||||||||||||||||||
-file_delete("blocks.ini");
+file_delete("blocks.sav");
 file_delete("chunks.ini");
 file_delete("regions.ini");
 file_delete("worlds.ini");

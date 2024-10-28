@@ -51,8 +51,31 @@ Ultimatums:
 - Legendary Sword Knight [32]: Requirees 15 and 30.
 - Mythical King [33]: Requires 32 and 31.
 
+Blocks save/compress method
+- Blocks are saved, but separated by chunks (blocks0-1.ini for chunk X0)
+- 48 blocks for every chunk (meaning 114 bytes avg X 48)
+- Every chunkname is saved in chunks.ini, indicating where it should load the corresponding blockX.ini
+- Use buffers with type buffer_grow to store the chunk in blocks and compress it (12288 bytes approx)
+
+Blocks load/uncompress method
+- First load chunks.ini and run a for loop with the size of the world / chunksize
+- Every loop:
+	- read the chunk value
+	- load the corresponding blocks file
+	- uncompress buffer and read
+	- add to blocks array
+
 1. finish skill tree ---- WIP
 2. iota everything before it's too late
 3. Make every block preserve its breaking state and regen if time passes --- DONE
 4. Make the Info-On-Screen display a list of stuff instead of drawing directly
 5. finish the goddamn menu ---- WIP
+6. make a giant reeverb for the dont forget ost instead of the sudden change
+7. start inventory system
+8. persistent object holding the block array
+9. fix wall collision
+10. cave gen using cellular automata noise
+11. move to tilemaps instead of instances
+12. Multiple worlds
+13. Organize arrays in chunks instead of 1 big array
+14. fast Lighting System using the blocklight script

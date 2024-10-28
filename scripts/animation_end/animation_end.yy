@@ -1,11 +1,13 @@
 {
-  "resourceType": "GMScript",
-  "resourceVersion": "1.0",
-  "name": "animation_end",
-  "isCompatibility": false,
-  "isDnD": false,
-  "parent": {
-    "name": "Animation Scripts",
-    "path": "folders/Scripts/Sprite Scripts/Animation Scripts.yy",
+  "$GMScript":"v1",
+  "%Name":"animation_end",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"animation_end",
+  "parent":{
+    "name":"Animation Scripts",
+    "path":"folders/Scripts/Sprite Scripts/Animation Scripts.yy",
   },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
 }

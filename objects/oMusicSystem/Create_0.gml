@@ -15,4 +15,4 @@ enum BGM {
 	INEXISTENCE
 }
 
-alarm[0] = irandom_range(15*GMSPD,20*GMSPD)
+alarm[0] = irandom_range(60*GMSPD,120*GMSPD)

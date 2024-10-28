@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"FastNoiseLite",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"FastNoiseLite",
+  "parent":{
+    "name":"FastNoise",
+    "path":"folders/_Libraries/FastNoise.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
