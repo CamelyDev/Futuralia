@@ -29,5 +29,5 @@ enum BT {
 alarm[0] = 10;
 
 plr = undefined;
-
+playerData = -1
 //gpu_set_blendenable(true);

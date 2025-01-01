@@ -1,7 +1,12 @@
 ///@desc load
 //begteam
 if (drawing != 2) {
-	tst_load();
+	playerData = tst_load();
+	oPlayer2.xp = playerData.xp;
+	oPlayer2.show_xp = playerData.show_xp;
+	oPlayer2.strength = playerData.strength;
+	oPlayer2.strength_to_rebirth = playerData.strength_to_rebirth;
+	oPlayer2.rebirths = playerData.rebirths;
 	//var _vx = camera_get_view_x(view_camera[0]);
 	//var _vy = camera_get_view_y(view_camera[0]);
 	//var _vw = camera_get_view_width(view_camera[0]);
