@@ -176,6 +176,8 @@
     {"id":{"name":"snd_footstep_grass2","path":"sounds/snd_footstep_grass2/snd_footstep_grass2.yy",},},
     {"id":{"name":"snd_footstep_solid1","path":"sounds/snd_footstep_solid1/snd_footstep_solid1.yy",},},
     {"id":{"name":"snd_footstep_solid2","path":"sounds/snd_footstep_solid2/snd_footstep_solid2.yy",},},
+    {"id":{"name":"snd_rebirth","path":"sounds/snd_rebirth/snd_rebirth.yy",},},
+    {"id":{"name":"snd_strength","path":"sounds/snd_strength/snd_strength.yy",},},
     {"id":{"name":"s_player_idle","path":"sprites/s_player_idle/s_player_idle.yy",},},
     {"id":{"name":"s_player_jump","path":"sprites/s_player_jump/s_player_jump.yy",},},
     {"id":{"name":"s_player_mask","path":"sprites/s_player_mask/s_player_mask.yy",},},

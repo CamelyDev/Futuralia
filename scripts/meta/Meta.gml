@@ -166,7 +166,7 @@ function tool(name,toolMode,toolPower,toolSpeed,extra) constructor {
 	}
 }
 
-function block(name,sprite_img,imgindex,resistance,position,blocktype,modadding = "futuralia",blockore = new block_ore(100,0)) constructor {
+function block(name,sprite_img,imgindex,resistance,position,blocktype,modadding = "futuralia",blockore = new block_ore(100,0,0)) constructor {
 	_modid = modadding
 	nm = name;
 	spr = sprite_img;

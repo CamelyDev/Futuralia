@@ -159,3 +159,21 @@ if (max_tm) {
 
 //----EXTRAS----
 mask_index = sPlayerMask;
+
+if (rest_xp > 0) {
+	xp++;
+	show_xp++;
+	rest_xp--;
+}
+xp_max = xp_curve();
+if (xp_max - show_xp <= 0) {
+	strength++;
+	strength_bonus = 1 + ((strength + rebirths) * 0.007)
+	audio_stop_sound(snd_strength);
+	audio_play_sound(snd_strength,1,false);
+	got_stronger = 256;
+	xp_max = xp_curve();
+	show_xp = 0;
+}
+got_stronger -= 2;
+rebirthed--;

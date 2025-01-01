@@ -1,7 +1,7 @@
 //begteam
 
-if (keyboard_check(vk_control) or mouse_check_button(mb_left)) and (distance_to_object(oCursor) < 1) and (distance_to_object(oPlayer2) < 6*BS) {
-	dest += abs(-(blockArray[index].res) / 100);
+if (keyboard_check(vk_control) or mouse_check_button(mb_left)) and (distance_to_object(oCursor) < 1) and (distance_to_object(oPlayer2) < 6*BS) and (oPlayer2.strength >= blockArray[index]._blockore._harvest_level) {
+	dest += abs(-(blockArray[index].res) / (101 - oPlayer2.strength_bonus));
 	if fsi <= 0 {
 		alarm[0] = 2;
 		fsi = 8;
@@ -24,6 +24,7 @@ if (keyboard_check(vk_control) or mouse_check_button(mb_left)) and (distance_to_
 
 if (dest >= 1) {
 	instance_destroy();
+	oPlayer2.xp_add(blockArray[index]._blockore._drop_xp);
 	blockArray[index] = 0;
 	//ds_grid_set(blockGrid,x div BS, abs(y div BS),-1);
 }

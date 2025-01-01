@@ -1,3 +1,3 @@
 //begteam
-y = -(HEIGHT * 2);
-x = 0;
+//y = -(HEIGHT * 2);
+//x = 0;

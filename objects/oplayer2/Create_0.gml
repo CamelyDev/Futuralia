@@ -10,6 +10,32 @@ light = instance_create_layer(x,y,"Instances",oLight)
 light.light_radius = 96;
 light.follow = id;
 
+rest_xp = 0;
+strength_bonus = 1;
+got_stronger = 0;
+rebirthed = 0;
+
+xp_curve = function() {
+	var _xp_pow = round(power(8*(strength+1),1.1495));
+	return _xp_pow;
+}
+
+xp_add = function(n) {
+	rest_xp+=n;
+}
+
+xp_max = xp_curve()
+
+make_rebirth = function() {
+	if (strength >= strength_to_rebirth) {
+		rebirths++;
+		strength = 0;
+		strength_to_rebirth += 8;
+		rebirthed = 256;
+		audio_play_sound(snd_rebirth,1,false);
+	}
+}
+
 zoo = 1;
 grav = 0.3;
 hsp = 0;

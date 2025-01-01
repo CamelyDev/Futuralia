@@ -133,6 +133,8 @@
     {"name":"snd_footstep_grass2","order":4,"path":"sounds/snd_footstep_grass2/snd_footstep_grass2.yy",},
     {"name":"snd_footstep_solid1","order":2,"path":"sounds/snd_footstep_solid1/snd_footstep_solid1.yy",},
     {"name":"snd_footstep_solid2","order":3,"path":"sounds/snd_footstep_solid2/snd_footstep_solid2.yy",},
+    {"name":"snd_rebirth","order":9,"path":"sounds/snd_rebirth/snd_rebirth.yy",},
+    {"name":"snd_strength","order":8,"path":"sounds/snd_strength/snd_strength.yy",},
     {"name":"s_player_idle","order":2,"path":"sprites/s_player_idle/s_player_idle.yy",},
     {"name":"s_player_jump","order":3,"path":"sprites/s_player_jump/s_player_jump.yy",},
     {"name":"s_player_mask","order":4,"path":"sprites/s_player_mask/s_player_mask.yy",},

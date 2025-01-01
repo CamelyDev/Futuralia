@@ -8,7 +8,7 @@ if (blockArray[index].spr == "") {
 	sprite_index = blockArray[index].spr
 }
 
-image_index = blockArray[index].img;
+//image_index = blockArray[index].img;
 
 switch(blocktype) {
 	case BT.SOLID: isCollision = true; mask_index = sMask2; break;
