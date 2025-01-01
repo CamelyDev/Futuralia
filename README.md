@@ -12,6 +12,7 @@ The game consists of five main habits you need to teach to the character. These 
 # Roadmap
 
 1. Implement the level system and the rebirthing system, so it actually converts into a tycoon game (lol)
-2. Fully implement a modding system, so you can add your own ores and community blocks
-3. Make the horror twist
-4. Possibly release this on itch.io
+2. Implement the "market" system, so you can sell ores to gain money
+3. Fully implement a modding system, so you can add your own ores and community blocks
+4. Make the horror twist
+5. Possibly release this on itch.io
