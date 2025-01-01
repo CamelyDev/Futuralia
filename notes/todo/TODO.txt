@@ -79,3 +79,5 @@ Blocks load/uncompress method
 12. Multiple worlds
 13. Organize arrays in chunks instead of 1 big array
 14. fast Lighting System using the blocklight script
+15. parse blocks and stuff from json into the blockarray
+16. game logic: mine stuff, gain level. with more level, mine more stuff. with more stuff, sell and rebirth.

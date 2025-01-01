@@ -1,5 +1,5 @@
 //initialize wariables
-#macro TIME_RATE 1
+#macro TIME_RATE 0.1
 #macro HOLD_TIME 256
 #macro DECAY_TIME 192
 #macro TIME_OFFSET 255
@@ -7,7 +7,7 @@ instance_create_layer(x,y,"Instances",oCameraPoint);
 globalvar light_surface;
 light_surface = surface_create(finalWorldSize*CHUNKSIZE*BS,HEIGHT*BS);
 light = instance_create_layer(x,y,"Instances",oLight)
-light.light_radius = 64;
+light.light_radius = 96;
 light.follow = id;
 
 zoo = 1;
@@ -20,6 +20,15 @@ msp = 2.5;
 jumps = 0;
 
 clmp = 0;
+
+ground_check = function() {
+	var _inst = instance_place(x,y+1,oSolid);
+	with (_inst) {
+		other.material_last = material;
+	}
+}
+
+material_last = "solid";
 
 var _inst = instance_nearest(x,y-10000,oSolid);
 if (_inst != noone) {

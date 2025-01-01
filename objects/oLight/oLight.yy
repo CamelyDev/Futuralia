@@ -37,10 +37,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"sLight",
-    "path":"sprites/sLight/sLight.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }

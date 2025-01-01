@@ -12,63 +12,64 @@ switch(curselector) {
 	} break;
 	
 	case 1: {
-		curblock = BL.brick
+		curblock = BLGLOBAL.futuralia.fixed.brick
 	} break;
 	
 	case 2: {
-		curblock = BL.woodplanks
+		curblock = BLGLOBAL.futuralia.fixed.wood_planks
 	} break;
 	
 	case 3: {
-		curblock = BL.woodwall
+		curblock = BLGLOBAL.futuralia.fixed.wood_wall
 	} break;
 	
 	case 4: {
-		curblock = BL.woodchairleft
+		curblock = BLGLOBAL.futuralia.fixed.wood_chair_left
 	} break;
 	
 	case 5: {
-		curblock = BL.woodchairright
+		curblock = BLGLOBAL.futuralia.fixed.wood_chair_right
 	} break;
 	
 	case 6: {
-		curblock = BL.woodtable
+		curblock = BLGLOBAL.futuralia.fixed.wood_table
 	} break;
 	
 	case 7: {
-		curblock = BL.woodslabup
+		curblock = BLGLOBAL.futuralia.fixed.wood_slab_up
 	} break;
 	
 	case 8: {
-		curblock = BL.woodslabdown
+		curblock = BLGLOBAL.futuralia.fixed.wood_slab_down
 	} break;
 	
 	case 9: {
-		curblock = BL.woodslableft
+		curblock = BLGLOBAL.futuralia.fixed.wood_slab_left
 	} break;
 	
 	case 10: {
-		curblock = BL.woodslabright
+		curblock = BLGLOBAL.futuralia.fixed.wood_slab_right
 	} break;
 }
 
 if (mouse_check_button(mb_right)) {
-	if (block_check(x,y) and distance_to_object(oPlayer2) < 6*BS) and (curblock != undefined) and (fpi == 0) {
+	if (distance_to_object(oPlayer2) < 6*BS) and (curblock != undefined) and (fpi == 0) {
 		//with (oSolid) {
 		//	event_user(0);
 		//}
-		//instance_create_layer(x,y,"Blocks",oChecker);
-		//alarm[0] = 1;
-		var bl = blocks[curblock];
-		var tile;
-		switch (bl.tlt) {
-			case TT.background_main: tile = tilemap_background; break;
-			case TT.blocks_main: tile = tilemap_blocks; break;
-			case TT.walls_main: tile = tilemap_walls; break;
-			default: tile = tilemap_blocks; break;
-		}
+		var bl = variable_clone(curblock)
+		bl.pos = new Vector2(x div BS, y div BS);
+		call_block_add(bl);
+		//var bl = blocks[curblock];
+		//var tile;
+		//switch (bl.tlt) {
+		//	case TT.background_main: tile = tilemap_background; break;
+		//	case TT.blocks_main: tile = tilemap_blocks; break;
+		//	case TT.walls_main: tile = tilemap_walls; break;
+		//	default: tile = tilemap_blocks; break;
+		//}
 		
-		tilemap_set_at_pixel(tile,curblock+1,x,y);
+		//tilemap_set_at_pixel(tile,curblock+1,x,y);
 		fpi = FPI_MAX;
 	} else {
 		if (fpi == 0) {
@@ -81,20 +82,20 @@ if (mouse_check_button(mb_right)) {
 	}
 }
 
-curblpos = tile_get_index(block_check_return(x,y));
+//curblpos = tile_get_index(block_check_return(x,y));
 
-if (keyboard_check(vk_control) or mouse_check_button(mb_left)) and distance_to_object(oPlayer2) < 6*BS and (fpi == 0) {
-	if (dest < 1) {
-		dest += abs(-(blockArray[curblpos].res) / 100);
-	} else {
-		block_set_empty(x,y);
-		event_user(0);
-		fpi = FPI_MAX;
-		dest = 0;
-	}
-} else {
-	dest = 0;
-}
+//if (keyboard_check(vk_control) or mouse_check_button(mb_left)) and distance_to_object(oPlayer2) < 6*BS and (fpi == 0) {
+//	if (dest < 1) {
+//		dest += abs(-(blockArray[curblpos].res) / 100);
+//	} else {
+//		block_set_empty(x,y);
+//		event_user(0);
+//		fpi = FPI_MAX;
+//		dest = 0;
+//	}
+//} else {
+//	dest = 0;
+//}
 
 if (fpi > 0) fpi--;
 //else {

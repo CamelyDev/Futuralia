@@ -2,6 +2,8 @@
 /// https://github.com/DragoniteSpam/Documentation/wiki/Magpie
 /// @author @DragoniteSpam
 
+// Feather ignore all
+
 function MagpieInventory() constructor {
     self.all_stacks = { };
     self.pockets = { };

@@ -1,1 +1,1 @@
-//ds_list_destroy(light_collision)
+ds_list_destroy(light_collision)

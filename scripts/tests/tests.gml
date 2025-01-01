@@ -4,38 +4,158 @@
 #macro REGSIZE 16
 #macro CHUNKSIZE 48
 #macro HEIGHT 128
-#macro BLSPRITE asset_get_index("tBlocks")
-#macro WLSPRITE asset_get_index("tBlocks")
-#macro GAMEVER "0.0.1"
-#macro DEFAULTPATH working_directory
+#macro BLSPRITE asset_get_index("sBlocks")
+#macro WLSPRITE asset_get_index("sBlocks")
+#macro BASEMOD "futuralia"
+#macro MODFORMAT ".frm"
+#macro GAMEVER "0.0.2"
+#macro DEFAULTPATH ""
+#macro MODPATH "future_game/mods/"
+
+function worldgen_parse_mods(array_of_files) {
+	_BL = {
+		is_loaded: false
+	}
+	for (var i = 0; i < array_length(array_of_files); i++) {
+		show_debug_message("Loading mod number " + string(i) + ", name " + array_of_files[i])
+		_mod_name = array_of_files[i];
+		_mod_zip = working_directory + MODPATH + _mod_name + "/" + _mod_name + ".zip"
+		if (file_exists(_mod_zip)) {
+			var _zip = zip_unzip(_mod_zip,working_directory + MODPATH + _mod_name + "/")
+			if (_zip <= 0) {
+				throw ("Cannot extract mod file " + _mod_zip + ". Please contact the developer of the mod or try again later.")
+			} else {
+				show_debug_message("Extracted mod file " + _mod_zip + " succesfully. Now loading...")
+			}
+		}
+		_mod_fn = MODPATH + _mod_name + "/" + array_of_files[i] + MODFORMAT;
+		_mod = file_text_open_read(_mod_fn);
+		//show_debug_message(_mod)
+		_mod_json = file_text_read_string(_mod)
+		//show_debug_message(_mod_json)
+		_mod_parsed = json_parse(_mod_json);
+		//show_debug_message(_mod_parsed)
+		struct_set(_BL,_mod_name,_mod_parsed);
+		
+		
+		var _str1 = variable_struct_get(_BL,_mod_name)
+		var _str = variable_struct_get(_str1,"fixed");
+		//sprite_add(MODPATH + _mod_name + "/" + nm + ".png",1,false,false,0,0)
+		//_str[$ _current_loop].nm + ".png";
+		//sprite_add(MODPATH + _mod_name + "/" + _str[$ _current_loop].nm + ".png";,1,false,false,0,0)
+		var _loop = variable_struct_get_names(_str);
+		var _loop_length = array_length(_loop);
+		
+		for (var j = 0; j < _loop_length; j++) {
+			var _current_loop = _loop[j];
+			var _fn = MODPATH + _mod_name + "/" + _str[$ _current_loop].nm + ".png"
+			_str[$ _current_loop].spr = sprite_add(_fn,1,false,false,0,0)
+		}
+		//_mod = file_text_open_read(MODPATH + _mod_name + "/" + array_of_files[i]);
+		////show_debug_message(_mod)
+		//_mod_json = file_text_read_string(_mod)
+		////show_debug_message(_mod_json)
+		//_mod_parsed = json_parse(_mod_json);
+		////show_debug_message(_mod_parsed)
+		//struct_set(_BL,_mod_name,_mod_parsed);
+	}
+	return _BL;
+}
+
+function worldgen_move_files() {
+	if (file_exists("futuralia.zip")) {
+		show_debug_message("Init move files")
+		file_copy("futuralia.zip",MODPATH + "futuralia/futuralia.zip")
+	}
+}
+
+function worldgen_list_mods(directory) {
+	var ds_folders, folder, _array;
+	ds_folders = ds_list_create();
+	_array = array_create(0);
+
+	folder = file_find_first(MODPATH + "*", fa_directory);
+	while(folder != "") {
+		if(directory_exists(directory)) {
+			ds_list_add(ds_folders, folder);
+		}
+		folder = file_find_next();
+	}
+
+	for(var index = 0; index < ds_list_size(ds_folders); index++) {
+		show_debug_message(ds_folders[| index]);
+		array_push(_array,ds_folders[| index]);
+	}
+	
+	ds_list_destroy(ds_folders);
+	
+	file_find_close();
+	
+	return _array;
+}
+
+function worldgen_define_chances_ores(blocks_struct) {
+	struct_foreach(blocks_struct,function(_name, _value) {
+		if (is_struct(_value)) {
+			struct_foreach(struct_get(_value,"fixed"),function(__name,__value) {
+				if (is_struct(__value)) {
+					if (is_struct(__value._blockore)) {
+						var bohl = __value._blockore._harvest_level;
+						if (bohl > 0) {
+							array_push(CHANCES,[__value._blockore._base_chance, __value]);
+							show_debug_message("Pushed base chance: " + string(__value._blockore._base_chance) + " for block name: " + __value.nm);
+						} else {
+							show_debug_message("Not enough harvest level to be scored for block name: " + __value.nm)
+						}
+					} else {
+						show_debug_message("No chances defined for block name: " + __value.nm)
+					}
+				} else {
+					show_debug_message("Not a block for index name: " + __name)
+				}
+			});
+		} else {
+			show_debug_message("Not a mod struct for mod name: " + _name)
+		}
+	});
+	//TODO finish this function to define ore chances
+	//loop through all of the blocks with >0 harvest level
+	//store all of the chances of them in an array
+	//order the blocks by rarity, and add a reference to them in the array
+	//return the array to put in a global var
+}
 
 function worldgen_init() {
-	enum BL {
-		grass,
-		dirt,
-		stone,
-		brick,
-		quartz,
-		emerald,
-		citrine,
-		diamond,
-		amethyst,
-		onyx,
-		ruby,
-		sapphire,
-		jasper,
-		tigerseye,
-		sugilite,
-		woodplanks,
-		woodslabup,
-		woodslabdown,
-		woodslableft,
-		woodslabright,
-		woodwall,
-		woodchairleft,
-		woodchairright,
-		woodtable
-	}
+	worldgen_move_files()
+	//enum BL {
+	//	grass,
+	//	dirt,
+	//	stone,
+	//	brick,
+	//	quartz,
+	//	emerald,
+	//	citrine,
+	//	diamond,
+	//	amethyst,
+	//	onyx,
+	//	ruby,
+	//	sapphire,
+	//	jasper,
+	//	tigerseye,
+	//	sugilite,
+	//	woodplanks,
+	//	woodslabup,
+	//	woodslabdown,
+	//	woodslableft,
+	//	woodslabright,
+	//	woodwall,
+	//	woodchairleft,
+	//	woodchairright,
+	//	woodtable
+	//}
+	
+	//worldgen_fixed()
+	
 	enum IT {
 		pickaxe,
 		dirt,
@@ -54,12 +174,7 @@ function worldgen_init() {
 		hoe,
 		shovel
 	}
-	enum TT {
-		blocks_main,
-		walls_main,
-		background_main
-	}
-	globalvar worldArray, regionArray, chunkArray, blockArray, currentPos, blocks, items, spriteBlocks;
+	globalvar worldArray, regionArray, chunkArray, blockArray, currentPos, blocks, items, spriteBlocks, BLGLOBAL, CHANCES;
 	//blockGrid = ds_grid_create(finalWorldSize * CHUNKSIZE,HEIGHT);
 	regionArray = array_create(1);
 	chunkArray = array_create(1);
@@ -67,318 +182,204 @@ function worldgen_init() {
 	worldArray = array_create(1);
 	currentPos = 0;
 	blocks = array_create(4);
+	var mods = worldgen_list_mods(MODPATH);
+	BLGLOBAL = worldgen_parse_mods(mods);
+	show_debug_message(BLGLOBAL)
 	items = array_create(10);
-	//....................................................................
-	//....................................................................
-	//....................................................................
-	//....................................................................
-	/*	function1 : undefined,
-		function2 : undefined,
-		function3 : undefined,
-		function4 : undefined,
-		tilePlace : undefined,
-		toolDone : undefined,
-		itemdrop : undefined,
-		is_solid : undefined,
-	*/
-	//....................................................................
-	//....................................................................
-	//....................................................................
-	////....................................................................
-	////....................................................................
-	////....................................................................
-	//var extras = {
-	//	function1 : undefined,
-	//	function2 : undefined,
-	//	function3 : undefined,
-	//	function4 : undefined,
-	//	tilePlace : undefined,
-	//	toolDone : undefined,
-	//	is_solid : undefined,
-	//	itemdrop : items[IT.dirt]
-	//}
-	//blocks[BL.dirt] = new block("Dirt",BLSPRITE,1,2.4,0,new vector2(0,0),BT.SOLID);
-	////....................................................................
-	//var extras = {
-	//	function1 : undefined,
-	//	function2 : undefined,
-	//	function3 : undefined,
-	//	function4 : undefined,
-	//	tilePlace : undefined,
-	//	toolDone : undefined,
-	//	is_solid : undefined,
-	//	itemdrop : items[IT.grass]
-	//}
-	//blocks[BL.grass] = new block("Grass Block",BLSPRITE,0,2.3,0,new vector2(0,0),BT.SOLID);
-	////....................................................................
-	//var extras = {
-	//	function1 : undefined,
-	//	function2 : undefined,
-	//	function3 : undefined,
-	//	function4 : undefined,
-	//	tilePlace : undefined,
-	//	toolDone : undefined,
-	//	is_solid : undefined,
-	//	itemdrop : items[IT.stone]
-	//}
-	//blocks[BL.stone] = new block("Stone",BLSPRITE,2,1.6,1,new vector2(0,0),BT.SOLID);
-	////....................................................................
-	//var extras = {
-	//	function1 : undefined,
-	//	function2 : undefined,
-	//	function3 : undefined,
-	//	function4 : undefined,
-	//	tilePlace : undefined,
-	//	toolDone : undefined,
-	//	is_solid : undefined,
-	//	itemdrop : items[IT.planks]
-	//}
-	//blocks[BL.planks] = new block("Wood Planks",BLSPRITE,3,2,0,new vector2(0,0),BT.SOLID);
-	//....................................................................
-	//itemgen_common();
-	worldgen_common()
-	worldgen_ores()
+	CHANCES = array_create(0)
+	array_pop(CHANCES);
+	worldgen_define_chances_ores(BLGLOBAL)
+}
+
+function worldgen_oredlc() {
 	
 }
 
-function worldgen_common() {
-	blocks[BL.dirt] = new block("Dirt",TT.blocks_main,1,2.4,new vector2(0,0),BT.SOLID);
-	blocks[BL.grass] = new block("Grass Block",TT.blocks_main,0,2.3,new vector2(0,0),BT.SOLID);
-	blocks[BL.stone] = new block("Stone",TT.blocks_main,2,1.6,new vector2(0,0),BT.SOLID);
-	blocks[BL.brick] = new block("Bricks",TT.blocks_main,3,2.2,new vector2(0,0),BT.SOLID);
-	blocks[BL.woodplanks] = new block("Wood Planks",TT.blocks_main,15,2,new vector2(0,0),BT.SOLID);
-	blocks[BL.woodslabup] = new block("Wood Slab (Up)",TT.blocks_main,16,2,new vector2(0,0),BT.SLABUP);
-	blocks[BL.woodslabdown] = new block("Wood Slab (Down)",TT.blocks_main,17,2,new vector2(0,0),BT.SLABDOWN);
-	blocks[BL.woodslableft] = new block("Wood Slab (Left)",TT.blocks_main,18,2,new vector2(0,0),BT.SLABLEFT);
-	blocks[BL.woodslabright] = new block("Wood Slab (Right)",TT.blocks_main,19,2,new vector2(0,0),BT.SLABRIGHT);
-	blocks[BL.woodwall] = new block("Wood Wall",TT.walls_main,20,2.6,new vector2(0,0),BT.PASSABLE);
-	blocks[BL.woodchairleft] = new block("Wood Chair (Left)",TT.background_main,21,2.5,new vector2(0,0),BT.PASSABLE);
-	blocks[BL.woodchairright] = new block("Wood Chair (Right)",TT.background_main,22,2.5,new vector2(0,0),BT.PASSABLE);
-	blocks[BL.woodtable] = new block("Wood Table",TT.background_main,23,2.3,new vector2(0,0),BT.PASSABLE);
+function worldgen_basegame() {
+	futuralia = {
+		
+	}
+	show_debug_message("Block struct init")
+	
+	//blocks[BL.grass] = new block("Grass Block",TT.blocks_main,0,2.3,new vector2(0,0),BT.SOLID);
+	struct_set(futuralia,"grass_block",new block("Grass Block","",0,2.3,new vector2(0,0),BT.SOLID,"futuralia"))
+	show_debug_message("First block")
+	//blocks[BL.dirt] = new block("Dirt",TT.blocks_main,1,2.4,new vector2(0,0),BT.SOLID);
+	struct_set(futuralia,"dirt",new block("Dirt","",1,2.4,new vector2(0,0),BT.SOLID,"futuralia"));
+	//blocks[BL.stone] = new block("Stone",TT.blocks_main,2,1.6,new vector2(0,0),BT.SOLID)
+	struct_set(futuralia,"stone",new block("Stone","",2,1.6,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(100,1)));
+	//blocks[BL.brick] = new block("Bricks",TT.blocks_main,3,2.2,new vector2(0,0),BT.SOLID)
+	struct_set(futuralia,"brick",new block("Bricks","",3,2.2,new vector2(0,0),BT.SOLID,"futuralia"));
+	//blocks[BL.woodplanks] = new block("Wood Planks",TT.blocks_main,15,2,new vector2(0,0),BT.SOLID,4))
+	struct_set(futuralia,"wood_planks",new block("Wood Planks","",15,2,new vector2(0,0),BT.SOLID,"futuralia"));
+	//blocks[BL.woodslabup] = new block("Wood Slab (Up)",TT.blocks_main,16,2,new vector2(0,0),BT.SLABUP,5))
+	struct_set(futuralia,"wood_slab_up",new block("Wood Slab (Up)","",16,2,new vector2(0,0),BT.SLABUP,"futuralia"))
+	//blocks[BL.woodslabdown] = new block("Wood Slab (Down)",TT.blocks_main,17,2,new vector2(0,0),BT.SLABDOWN,6))
+	struct_set(futuralia,"wood_slab_down",new block("Wood Slab (Down)","",17,2,new vector2(0,0),BT.SLABDOWN,"futuralia"))
+	//blocks[BL.woodslableft] = new block("Wood Slab (Left)",TT.blocks_main,18,2,new vector2(0,0),BT.SLABLEFT,7))
+	struct_set(futuralia,"wood_slab_left",new block("Wood Slab (Left)","",18,2,new vector2(0,0),BT.SLABLEFT,"futuralia"))
+	//blocks[BL.woodslabright] = new block("Wood Slab (Right)",TT.blocks_main,19,2,new vector2(0,0),BT.SLABRIGHT,8))
+	struct_set(futuralia,"wood_slab_right",new block("Wood Slab (Right)","",19,2,new vector2(0,0),BT.SLABRIGHT,"futuralia"))
+	//blocks[BL.woodwall] = new block("Wood Wall",TT.walls_main,20,2.6,new vector2(0,0),BT.PASSABLE,9))
+	struct_set(futuralia,"wood_wall",new block("Wood Wall","",20,2.6,new vector2(0,0),BT.PASSABLE,"futuralia"))
+	//blocks[BL.woodchairleft] = new block("Wood Chair (Left)",TT.background_main,21,2.5,new vector2(0,0),BT.PASSABLE,10))
+	struct_set(futuralia,"wood_chair_left",new block("Wood Chair (Left)","",21,2.5,new vector2(0,0),BT.PASSABLE,"futuralia"))
+	//blocks[BL.woodchairright] = new block("Wood Chair (Right)",TT.background_main,22,2.5,new vector2(0,0),BT.PASSABLE,11))
+	struct_set(futuralia,"wood_chair_right",new block("Wood Chair (Right)","",22,2.5,new vector2(0,0),BT.PASSABLE,"futuralia"))
+	//blocks[BL.woodtable] = new block("Wood Table",TT.background_main,23,2.3,new vector2(0,0),BT.PASSABLE,12))
+	struct_set(futuralia,"wood_table",new block("Wood Table","",23,2.3,new vector2(0,0),BT.PASSABLE,"futuralia"))
+	//blocks[BL.quartz] = new block("Quartz",TT.blocks_main,4,1.5,new vector2(0,0),BT.SOLID,13));}
+	/*
+	chanceArray = [
+		100, stone
+		22*mult, quartz
+		21*mult, emerald
+		18*mult, citrine
+		17*mult, diamond
+		15*mult, amethyst
+		13*mult, onyx
+		9*mult, ruby
+		5*mult, sapphire
+		3*mult, jasper
+		1*mult, tigers_eye
+		1/5*mult sugilite
+	]
+	*/
+	show_debug_message("Ore blocks init")
+	struct_set(futuralia,"quartz",new block("Quartz","",4,1.5,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(22,1)));
+	//blocks[BL.emerald] = new block("Emerald",TT.blocks_main,5,1.4,new vector2(0,0),BT.SOLID,14);
+	struct_set(futuralia,"emerald",new block("Emerald","",5,1.4,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(21,1)));
+	//blocks[BL.citrine] = new block("Citrine",TT.blocks_main,6,1.3,new vector2(0,0),BT.SOLID,15);
+	struct_set(futuralia,"citrine",new block("Citrine","",6,1.3,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(18,2)));
+	//blocks[BL.diamond] = new block("Diamond",TT.blocks_main,7,1.2,new vector2(0,0),BT.SOLID,16);
+	struct_set(futuralia,"diamond",new block("Diamond","",7,1.2,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(17,2)));
+	//blocks[BL.amethyst] = new block("Amethyst",TT.blocks_main,8,1.1,new vector2(0,0),BT.SOLID,17);
+	struct_set(futuralia,"amethyst",new block("Amethyst","",8,1.1,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(15,2)));
+	//blocks[BL.onyx] = new block("Onyx",TT.blocks_main,9,1.0,new vector2(0,0),BT.SOLID,18);
+	struct_set(futuralia,"onyx",new block("Onyx","",9,1.0,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(13,3)));
+	//blocks[BL.ruby] = new block("Ruby",TT.blocks_main,10,0.9,new vector2(0,0),BT.SOLID,19);
+	struct_set(futuralia,"ruby", new block("Ruby","",10,0.9,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(9,3)));
+	//blocks[BL.sapphire] = new block("Sapphire",TT.blocks_main,11,0.8,new vector2(0,0),BT.SOLID,20));
+	struct_set(futuralia,"sapphire", new block("Sapphire","",11,0.8,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(5,3)));
+	//blocks[BL.jasper] = new block("Jasper",TT.blocks_main,12,0.7,new vector2(0,0),BT.SOLID,21));
+	struct_set(futuralia,"jasper",new block("Jasper","",12,0.7,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(3,4)));
+	//blocks[BL.tigerseye] = new block("Tiger's Eye",TT.blocks_main,13,0.6,new vector2(0,0),BT.SOLID,22));
+	struct_set(futuralia,"tigers_eye",new block("Tiger's Eye","",13,0.6,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(1,4)));
+	//blocks[BL.sugilite] = new block("Sugilite",TT.blocks_main,14,0.5,new vector2(0,0),BT.SOLID,23));
+	struct_set(futuralia,"sugilite",new block("Sugilite","",14,0.5,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(1/5,5)));
+	
+	_bl = {
+		fixed: futuralia
+	}
+	
+	show_debug_message("All blocks added")
+	_bl_text = json_stringify(_bl,false);
+	show_debug_message("Stringified")
+	_file = file_text_open_write(MODPATH + "futuralia/" + BLJSON);
+	show_debug_message("Opened file")
+	file_text_write_string(_file,_bl_text);
+	show_debug_message("Wrote to file")
+	file_text_close(_file);
+	show_debug_message("Closed file")
 }
 
-function worldgen_ores() {
-	blocks[BL.quartz] = new block("Quartz",TT.blocks_main,4,1.5,new vector2(0,0),BT.SOLID);
-	blocks[BL.emerald] = new block("Emerald",TT.blocks_main,5,1.4,new vector2(0,0),BT.SOLID);
-	blocks[BL.citrine] = new block("Citrine",TT.blocks_main,6,1.3,new vector2(0,0),BT.SOLID);
-	blocks[BL.diamond] = new block("Diamond",TT.blocks_main,7,1.2,new vector2(0,0),BT.SOLID);
-	blocks[BL.amethyst] = new block("Amethyst",TT.blocks_main,8,1.1,new vector2(0,0),BT.SOLID);
-	blocks[BL.onyx] = new block("Onyx",TT.blocks_main,9,1.0,new vector2(0,0),BT.SOLID);
-	blocks[BL.ruby] = new block("Ruby",TT.blocks_main,10,0.9,new vector2(0,0),BT.SOLID);
-	blocks[BL.sapphire] = new block("Sapphire",TT.blocks_main,11,0.8,new vector2(0,0),BT.SOLID);
-	blocks[BL.jasper] = new block("Jasper",TT.blocks_main,12,0.7,new vector2(0,0),BT.SOLID);
-	blocks[BL.tigerseye] = new block("Tiger's Eye",TT.blocks_main,13,0.6,new vector2(0,0),BT.SOLID);
-	blocks[BL.sugilite] = new block("Sugilite",TT.blocks_main,14,0.5,new vector2(0,0),BT.SOLID);
-}
-
-function itemgen_common() {
-	var extras = {
-		function1 : function(vec2) {
-			var inst = instance_position(vec2.x*BS,vec2.y*BS,oSolid);
-			blockArray[inst.index] = 0;
-			with (inst) {
-				instance_destroy();
-			}
-			return true;
-		},
-		function2 : undefined,
-		function3 : undefined,
-		function4 : undefined,
-		tilePlace : undefined,
-		toolDone : undefined,
-		itemdrop : undefined,
-		is_solid : undefined
+function chanceCustom(mult) {
+	var rand = random(100);
+	var finalRarity = -1;
+	
+	for (var i = 0; i < array_length(CHANCES); i++) {
+		if (rand <= CHANCES[i][0] * mult) {
+			finalRarity = CHANCES[i][1];
+		}
+		//else {
+		//	break;
+		//}
 	}
-	var extra = {
-		function1 : undefined,
-		function2 : undefined,
-		function3 : undefined,
-		function4 : undefined,
-		tilePlace : undefined,
-		itemdrop : undefined,
-		is_solid : undefined,
-		toolDone : new tool("T1 Pickaxe",TM.pick,1,1.5,extras)
-	}
-	items[IT.pickaxe] = new item_a("Beginner Pickaxe",sItemsTest,0,extra);
-	//....................................................................
-	//....................................................................
-	//....................................................................
-	extras = {
-		function1 : undefined,
-		function2 : undefined,
-		function3 : undefined,
-		function4 : undefined,
-		tilePlace : undefined,
-		toolDone : undefined,
-		is_solid : undefined,
-		itemdrop :  new item_a("Dirt",BLSPRITE,1,extra)
-	}
-	extra = {
-		function1 : undefined,
-		function2 : undefined,
-		function3 : undefined,
-		function4 : undefined,
-		toolDone : undefined,
-		itemdrop : undefined,
-		is_solid : undefined,
-		tilePlace : new block("Dirt",BLSPRITE,1,2.4,0,new vector2(0,0),extras)
-	}
-	items[IT.dirt] = new item_a("Dirt",BLSPRITE,1,undefined);
-	//....................................................................
-	extras = {
-		function1 : undefined,
-		function2 : undefined,
-		function3 : undefined,
-		function4 : undefined,
-		tilePlace : undefined,
-		toolDone : undefined,
-		is_solid : undefined,
-		itemdrop : new item_a("Grass Block",BLSPRITE,0,extra)
-	}
-	extra = {
-		function1 : undefined,
-		function2 : undefined,
-		function3 : undefined,
-		function4 : undefined,
-		toolDone : undefined,
-		itemdrop : undefined,
-		is_solid : undefined,
-		tilePlace : new block("Grass Block",BLSPRITE,0,2.3,0,new vector2(0,0),extras)
-	}
-	items[IT.grass] = new item_a("Grass Block",BLSPRITE,0,undefined);
-	//....................................................................
-	extras = {
-		function1 : undefined,
-		function2 : undefined,
-		function3 : undefined,
-		function4 : undefined,
-		tilePlace : undefined,
-		toolDone : undefined,
-		is_solid : undefined,
-		itemdrop : new item_a("Wood Planks",BLSPRITE,27,extra)
-	}
-	extra = {
-		function1 : undefined,
-		function2 : undefined,
-		function3 : undefined,
-		function4 : undefined,
-		toolDone : undefined,
-		itemdrop : undefined,
-		is_solid : undefined,
-		tilePlace : new block("Wood Planks",BLSPRITE,27,2,0,new vector2(0,0),undefined)
-	}
-	items[IT.brick] = new item_a("Wood Planks",BLSPRITE,27,undefined);
-	//....................................................................
-	extras = {
-		function1 : undefined,
-		function2 : undefined,
-		function3 : undefined,
-		function4 : undefined,
-		tilePlace : undefined,
-		toolDone : undefined,
-		is_solid : undefined,
-		itemdrop : new item_a("Wood Planks",BLSPRITE,4,extra)
-	}
-	extra = {
-		function1 : undefined,
-		function2 : undefined,
-		function3 : undefined,
-		function4 : undefined,
-		toolDone : undefined,
-		itemdrop : undefined,
-		is_solid : undefined,
-		tilePlace : new block("Stone",BLSPRITE,4,1.6,1,new vector2(0,0),undefined)
-	}
-	items[IT.brick] = new item_a("Stone",BLSPRITE,4,undefined);
+	
+	return finalRarity;
 }
 
 function worldgen_get_ore(xx,yy,mult) {
-	var chanceArray, chanceResult, bl, oldseed;
-	oldseed = random_get_seed();
-	randomize()
-	chanceArray = [
-		100,
-		22*mult,
-		21*mult,
-		18*mult,
-		17*mult,
-		15*mult,
-		13*mult,
-		9*mult,
-		5*mult,
-		3*mult,
-		1*mult,
-		1/5*mult
-	]
-	chanceResult = chanceCustom(chanceArray);
-	switch(chanceResult) {
-		case 0: {
-			bl = blocks[BL.stone].Copy();
-			bl.pos = new vector2(xx div BS,yy div BS);
-		} break;
+	//check each block-chance
+	//if gen-chance is less or equal than block-chance set block copy
+	//do that until there is no block ores left
+	var chanceResult, bl, _bl, oldseed;
+	//randomize()
+	chanceResult = chanceCustom(mult);
+	bl = chanceResult;
+	//show_debug_message(chanceResult);
+	//switch(chanceResult) {
+	//	case 0: {
+	//		//stone
+	//		bl = BLGLOBAL.futuralia.fixed.stone
+	//	} break;
 		
-		case 1: {
-			bl = blocks[BL.quartz].Copy();
-			bl.pos = new vector2(xx div BS,yy div BS);
-		} break;
+	//	case 1: {
+	//		//quartz
+	//		bl = BLGLOBAL.futuralia.fixed.quartz
+	//	} break;
 		
-		case 2: {
-			bl = blocks[BL.emerald].Copy();
-			bl.pos = new vector2(xx div BS,yy div BS);
-		} break;
+	//	case 2: {
+	//		//emerald
+	//		bl = BLGLOBAL.futuralia.fixed.emerald
+	//	} break;
 		
-		case 3: {
-			bl = blocks[BL.citrine].Copy();
-			bl.pos = new vector2(xx div BS,yy div BS);
-		} break;
+	//	case 3: {
+	//		//citrine
+	//		bl = BLGLOBAL.futuralia.fixed.citrine
+	//	} break;
 		
-		case 4: {
-			bl = blocks[BL.diamond].Copy();
-			bl.pos = new vector2(xx div BS,yy div BS);
-		} break;
+	//	case 4: {
+	//		//diamond
+	//		bl = BLGLOBAL.futuralia.fixed.diamond
+	//	} break;
 		
-		case 5: {
-			bl = blocks[BL.amethyst].Copy();
-			bl.pos = new vector2(xx div BS,yy div BS);
-		} break;
+	//	case 5: {
+	//		//amethyst
+	//		bl = BLGLOBAL.futuralia.fixed.amethyst
+	//	} break;
 		
-		case 6: {
-			bl = blocks[BL.onyx].Copy();
-			bl.pos = new vector2(xx div BS,yy div BS);
-		} break;
+	//	case 6: {
+	//		//onyx
+	//		bl = BLGLOBAL.futuralia.fixed.onyx
+	//	} break;
 		
-		case 7: {
-			bl = blocks[BL.ruby].Copy();
-			bl.pos = new vector2(xx div BS,yy div BS);
-		} break;
+	//	case 7: {
+	//		//ruby
+	//		bl = BLGLOBAL.futuralia.fixed.ruby
+	//	} break;
 		
-		case 8: {
-			bl = blocks[BL.sapphire].Copy();
-			bl.pos = new vector2(xx div BS,yy div BS);
-		} break;
+	//	case 8: {
+	//		//sapphire
+	//		bl = BLGLOBAL.futuralia.fixed.sapphire
+	//	} break;
 		
-		case 9: {
-			bl = blocks[BL.jasper].Copy();
-			bl.pos = new vector2(xx div BS,yy div BS);
-		} break;
+	//	case 9: {
+	//		//jasper
+	//		bl = BLGLOBAL.futuralia.fixed.jasper
+	//	} break;
 		
-		case 10: {
-			bl = blocks[BL.tigerseye].Copy();
-			bl.pos = new vector2(xx div BS,yy div BS);
-		} break;
+	//	case 10: {
+	//		//tigerseye
+	//		bl = BLGLOBAL.futuralia.fixed.tigers_eye
+	//	} break;
 		
-		case 11: {
-			bl = blocks[BL.sugilite].Copy();
-			bl.pos = new vector2(xx div BS,yy div BS);
-		} break;
-		
-		default: {
-			bl = blocks[BL.stone].Copy();
-			bl.pos = new vector2(xx div BS,yy div BS);
-		} break;
+	//	case 11: {
+	//		//sugilite
+	//		bl = BLGLOBAL.futuralia.fixed.sugilite
+	//	} break;
+	//}
+	//show_debug_message(bl)
+	if (bl != -1) {
+		_bl = variable_clone(bl)
+	} else {
+		_bl = variable_clone(BLGLOBAL.futuralia.fixed.stone);
 	}
-	random_set_seed(oldseed);
-	return bl;
+	show_debug_message(_bl)
+	if (_bl != -1) {
+		_bl.pos = new vector2(xx div BS,yy div BS);
+	}
+	return _bl;
 }
 
 function chance(perc){
@@ -389,21 +390,6 @@ function chance(perc){
 function chanceint(perc){
 	var rand = irandom(100);
 	return rand < perc ? 1 : 0;
-}
-
-function chanceCustom(rarityarray) {
-	var rand = random(100);
-	var finalRarity = -1;
-	
-	for (var i = 0; i < array_length(rarityarray); i++) {
-		if (rand <= rarityarray[i]) {
-			finalRarity = i;
-		} else {
-			break;
-		}
-	}
-	
-	return finalRarity;
 }
 
 function world_creation(wrld) {
@@ -426,7 +412,17 @@ function block_gen(blo) {
 
 function call_block_add(bl) {
 	//ds_grid_set(blockGrid,bl.pos.x div BS, abs(bl.pos.y div BS),bl);
-	var inst = instance_create_layer(bl.pos.x * BS,bl.pos.y * BS,"Blocks",oSolid);
+	var inst;
+	var _x, _y;
+	_x = bl.pos.x*BS;
+	_y = bl.pos.y*BS;
+	var _check = collision_rectangle(_x,_y,_x+(BS-1),_y+(BS-1),oSolid,true,true);
+	if (_check == noone) {
+		inst = instance_create_layer(_x,_y,"Blocks",oSolid);
+	} else {
+		inst = _check;
+		inst.index = 0;
+	}
 	inst.index = block_gen(bl);
 }
 
@@ -484,23 +480,23 @@ function world_gen(pos,size,seed) {
 		for (var j = 0; j < h; j++) {
 			var yy = ((maxheight*1.6)*BS) - (j*BS);
 			if (j >= h - 1) {
-				bl = blocks[BL.grass].Copy();
+				bl = variable_clone(BLGLOBAL.futuralia.fixed.grass_block)
 				bl.pos = new vector2(xx div BS,yy div BS);
 			} else if (j >= h - 4) {
-				bl = blocks[BL.dirt].Copy();
+				bl = variable_clone(BLGLOBAL.futuralia.fixed.dirt)
 				bl.pos = new vector2(xx div BS,yy div BS);
 			} else {
-				if (j >= h - 12) bl = worldgen_get_ore(xx,yy,0.1);
-				else if (j >= h - 24) bl = worldgen_get_ore(xx,yy,0.2);
-				else if (j >= h - 48) bl = worldgen_get_ore(xx,yy,0.3);
-				else if (j >= h - 60) bl = worldgen_get_ore(xx,yy,0.4);
-				else if (j >= h - 72) bl = worldgen_get_ore(xx,yy,0.5);
-				else if (j >= h - 84) bl = worldgen_get_ore(xx,yy,0.6);
-				else if (j >= h - 96) bl = worldgen_get_ore(xx,yy,0.7);
-				else if (j >= h - 108) bl = worldgen_get_ore(xx,yy,0.8);
-				else if (j >= h - 120) bl = worldgen_get_ore(xx,yy,0.9);
-				else if (j >= h - 132) bl = worldgen_get_ore(xx,yy,1);
-				else if (j >= h - 144) bl = worldgen_get_ore(xx,yy,1.1);
+				if (j >= h - 12) bl = worldgen_get_ore(xx,yy,0.05);
+				else if (j >= h - 24) bl = worldgen_get_ore(xx,yy,0.1);
+				else if (j >= h - 48) bl = worldgen_get_ore(xx,yy,0.17);
+				else if (j >= h - 60) bl = worldgen_get_ore(xx,yy,0.23);
+				else if (j >= h - 72) bl = worldgen_get_ore(xx,yy,0.45);
+				else if (j >= h - 84) bl = worldgen_get_ore(xx,yy,0.61);
+				else if (j >= h - 96) bl = worldgen_get_ore(xx,yy,0.73);
+				else if (j >= h - 108) bl = worldgen_get_ore(xx,yy,0.89);
+				else if (j >= h - 120) bl = worldgen_get_ore(xx,yy,1);
+				else if (j >= h - 132) bl = worldgen_get_ore(xx,yy,1.12);
+				else if (j >= h - 144) bl = worldgen_get_ore(xx,yy,1.495);
 				else bl = worldgen_get_ore(xx,yy,1.2);
 					
 			}
@@ -604,6 +600,7 @@ function tst_save() {
 	buffer_save(compbuff,DEFAULTPATH + "blocks.sav");
 	buffer_delete(compbuff);
 	buffer_delete(buff);
+	//saveStructs(DEFAULTPATH + "blocks.ini", blockArray);
 	saveStructs(DEFAULTPATH + "worlds.ini",worldArray);
 	saveStructs(DEFAULTPATH + "regions.ini",regionArray);
 	saveStructs(DEFAULTPATH + "chunks.ini",chunkArray);
@@ -763,22 +760,37 @@ function instance_exists_position(_x,_y,_instance) {
 
 function collision_check(_x,_y,obj) {
 	var _inst, useful;
-	useful = obj;
+	//useful = obj;
 	//_inst = tilemap_get_at_pixel(tilemap_solids,_x,_y);
 	//if (_inst != 0) and (_inst != -1) and (_inst != 21) {
 	//	return true;
 	//}
 	//return false;
-	return place_meeting(_x,_y,[tilemap_blocks]);
+	_inst = instance_place(_x,_y,obj)
+	with _inst return isCollision;
 	//with (_inst) {
 	//	return isCollision;
 	//}
 	//wat the fuck
 }
 
+//function four_way_check(_x,_y,_hor,_ver) {
+//	var _inst, _bbox_hor, _bbox_ver;
+//	switch(_hor) {
+//		case -1: _bbox = bbox_left;
+//		case 1: _bbox = bbox_right;
+//	}
+//	switch(_ver) {
+		
+//		case 1: _bbox = bbox_right;
+//	}
+// help fuck fuck help i cant !!! ! !! !! fuckfuckfujhcvgthjktgrhdx
+//}
+
 function block_check(_x,_y) {
 	if (tilemap_get_at_pixel(tilemap_blocks,_x,_y) == 0) return true;
 	//no background tilemap, that one is a fucking dumb ass bitch
+	//wh do i still have these fuckass functions omg
 	return false;
 }
 
@@ -878,3 +890,18 @@ function blocklight_draw() {
 //function draw_lights() {
 	//STOP MAKING FUNCTIONS THAT YOU WONT USE FUCKER
 //}
+
+function block_check_point(_x,_y) {
+	var _inst = collision_rectangle(_x,_y,_x+BS,_y+BS,oSolid,false,true)
+	if (instance_exists(_inst)) {
+		return _inst
+	} else return noone
+}
+
+function sprite_broadcast(message_type,callback) {
+	if (event_data[? "event_type"] == "sprite event") {
+		if (event_data[? "message"] == message_type) {
+			callback();
+		}
+	}
+}

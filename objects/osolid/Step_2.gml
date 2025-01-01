@@ -1,0 +1,1 @@
+input_amount = round(input_amount);

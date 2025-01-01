@@ -54,11 +54,13 @@
     {"$GMFolder":"","%Name":"Timelines","folderPath":"folders/Timelines.yy","name":"Timelines","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Utilities","folderPath":"folders/Utilities.yy","name":"Utilities","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
-  "IncludedFiles":[],
+  "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"futuralia.zip","CopyToMask":-1,"filePath":"datafiles","name":"futuralia.zip","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+  ],
   "isEcma":false,
   "LibraryEmitters":[],
   "MetaData":{
-    "IDEVersion":"2024.8.1.171",
+    "IDEVersion":"2024.11.0.179",
   },
   "name":"Futuralia",
   "resources":[
@@ -68,6 +70,7 @@
     {"id":{"name":"Discord","path":"extensions/Discord/Discord.yy",},},
     {"id":{"name":"fnt1","path":"fonts/fnt1/fnt1.yy",},},
     {"id":{"name":"fnt2","path":"fonts/fnt2/fnt2.yy",},},
+    {"id":{"name":"fnt3","path":"fonts/fnt3/fnt3.yy",},},
     {"id":{"name":"BLOCKS","path":"notes/BLOCKS/BLOCKS.yy",},},
     {"id":{"name":"compatibility_report_200622_1327482748","path":"notes/compatibility_report_200622_1327482748/compatibility_report_200622_1327482748.yy",},},
     {"id":{"name":"METASYSTEM","path":"notes/METASYSTEM/METASYSTEM.yy",},},
@@ -197,6 +200,7 @@
     {"id":{"name":"sMask5","path":"sprites/sMask5/sMask5.yy",},},
     {"id":{"name":"sMask6","path":"sprites/sMask6/sMask6.yy",},},
     {"id":{"name":"sMaskTiles","path":"sprites/sMaskTiles/sMaskTiles.yy",},},
+    {"id":{"name":"sMissingText","path":"sprites/sMissingText/sMissingText.yy",},},
     {"id":{"name":"sMouse","path":"sprites/sMouse/sMouse.yy",},},
     {"id":{"name":"sNightPixel","path":"sprites/sNightPixel/sNightPixel.yy",},},
     {"id":{"name":"sPlayerAttack","path":"sprites/sPlayerAttack/sPlayerAttack.yy",},},

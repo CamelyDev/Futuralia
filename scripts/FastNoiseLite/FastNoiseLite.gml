@@ -54,7 +54,7 @@
 // Discord: storm#8888 (prefered) | Email: storm1surge@gmail.com | Github: stormy482 (https://github.com/stormy482)
 //
 
-
+// Feather ignore all
 
 /**
 	* @description FastNoiseLite Lite is an extremely portable open source noise generation library with a large selection of noise algorithms

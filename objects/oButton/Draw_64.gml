@@ -2,7 +2,7 @@ draw_set_color(merge_color(merge_color(c_gray,c_ltgray,hover),c_white,click));
 
 draw_roundrect(x,y,x + width, y + height, 0)
 
-draw_set_color(c_black);
+draw_set_color(text_color);
 draw_set_halign(fa_center);
 draw_set_valign(fa_middle);
 draw_text(x + width/2, y + height/2, text);

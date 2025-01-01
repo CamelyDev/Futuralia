@@ -7,9 +7,8 @@ switch(curblock) {
 		draw_sprite_ext(sCursor,curstate,x,y,1,1,0,c_white,1);
 	} break;
 	default: {
-		draw_sprite_ext(sBlocks,curblock,x,y,1,1,0,c_white,0.5);
+		draw_sprite_ext(curblock.spr,curblock.img,x,y,1,1,0,c_white,0.5);
 		draw_sprite_ext(sCursor,curstate,x,y,1,1,0,c_white,0.5);
 	} break;
 }
-draw_sprite(sMouse,round(current_time/100) mod 6, mx,my);
-draw_sprite(sBreak,(dest*10),x,y);
+draw_sprite(sMouse,round(current_time/125) mod 6, mx,my);

@@ -1,4 +1,5 @@
 menuState = 0;
+createbasegame = create_button(580,140,224,64,"Generate Game Files",worldgen_basegame);
 ws0 = create_button(224,400,160,64,"Tiny (3 chunks)",ws_tiny);
 ws1 = create_button(416,400,160,64,"Medium (6 chunks)",ws_medium);
 ws2 = create_button(608,400,160,64,"Large (12 chunks)",ws_large);

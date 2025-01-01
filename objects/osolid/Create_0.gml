@@ -8,6 +8,8 @@
 
 //})
 
+debugdraw = false;
+
 block_radius = 4;
 magic_number = 32;
 index = 0;
@@ -17,11 +19,13 @@ fsi = 8;
 foi = 12;
 fli = 4;
 blocktype = BT.SOLID
-tilemap_lel = undefined
+//tilemap_lel = undefined
 
 input_amount = 0;
 input_hue = 0;
 input_saturation = 0;
 
 isCollision = true;
+material = "solid"
+
 alarm[1] = 1;

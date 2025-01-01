@@ -28,16 +28,10 @@ function item_table(tile_to_place,drop_item) constructor {
 	}
 }
 
-function block_table(display_name,tool_needed,id_image,resistance,block_type) constructor {
-	nam = display_name;
-	tln = tool_needed;
-	img = id_image;
-	res = resistance;
-	blt = block_type;
-	
-	static Copy = function() {
-		return new block_table(nam,tln,img,res,blt);
-	}
+function block_ore(base_chance = 100,harvest_level = 0,drop_xp = 0) constructor {
+	_base_chance = base_chance;
+	_harvest_level = harvest_level;
+	_drop_xp = drop_xp
 }
 
 function tool_table(tool_type,tool_speed,tool_durability,tool_power,tool_place) constructor {
@@ -172,13 +166,15 @@ function tool(name,toolMode,toolPower,toolSpeed,extra) constructor {
 	}
 }
 
-function block(name,tile_table,imgindex,resistance,position,blocktype) constructor {
+function block(name,sprite_img,imgindex,resistance,position,blocktype,modadding = "futuralia",blockore = new block_ore(100,0)) constructor {
+	_modid = modadding
 	nm = name;
-	tlt = tile_table;
+	spr = sprite_img;
 	img = imgindex;
 	res = resistance;
 	pos = position;
 	bt = blocktype;
+	_blockore = blockore
 	//ext = {
 	//	func1 : undefined,
 	//	func2 : undefined,
@@ -211,9 +207,6 @@ function block(name,tile_table,imgindex,resistance,position,blocktype) construct
 	//	}
 		
 	//}
-	static Copy = function() {
-		return new block(nm,tlt,img,res,pos,bt);
-	}
 }
 
 function chunk(reg,pos,arr,foc) constructor {

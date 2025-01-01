@@ -4,6 +4,9 @@
 /// @param start_pos
 /// @param end_pos
 /// @param end_time
+
+// Feather ignore all
+
 enum ez {
 	linear,
 	in_quad,
