@@ -2,12 +2,12 @@
 A mining simulator "tycoon" game made in GMS2, with a psychological horror twist (that, sadly, hasn't been implemented yet).
 The game consists of five main habits you need to teach to the character. These consists of:
 1. Mining
-2. Obtaining stuff and selling it
+2. Obtaining stuff, gaining XP (and selling it in future updates)
 3. Gaining strength
 4. The rebirth system
 5. Smiling
 
-(these are not implemented yet LOL)
+(some are not implemented yet LOL)
 
 # Roadmap
 
