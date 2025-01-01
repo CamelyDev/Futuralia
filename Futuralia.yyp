@@ -67,7 +67,6 @@
     {"id":{"name":"stanncam_ac_bouncy","path":"animcurves/stanncam_ac_bouncy/stanncam_ac_bouncy.yy",},},
     {"id":{"name":"stanncam_ac_ease","path":"animcurves/stanncam_ac_ease/stanncam_ac_ease.yy",},},
     {"id":{"name":"stanncam_ac_linear","path":"animcurves/stanncam_ac_linear/stanncam_ac_linear.yy",},},
-    {"id":{"name":"Discord","path":"extensions/Discord/Discord.yy",},},
     {"id":{"name":"fnt1","path":"fonts/fnt1/fnt1.yy",},},
     {"id":{"name":"fnt2","path":"fonts/fnt2/fnt2.yy",},},
     {"id":{"name":"fnt3","path":"fonts/fnt3/fnt3.yy",},},
