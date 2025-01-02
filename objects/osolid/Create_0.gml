@@ -9,6 +9,7 @@
 //})
 
 debugdraw = false;
+mining = true;
 
 block_radius = 4;
 magic_number = 32;

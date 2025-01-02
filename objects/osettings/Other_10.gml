@@ -1,8 +1,8 @@
 //begteam
-if (file_exists("settings.ini")) {
+if (file_exists("settings")) {
 
 	//||||||||||||||||||||||||||||||
-	ini_open("settings.ini");
+	ini_open("settings");
 	//...............................
 	finalWorldSize = ini_read_real("Game","WorldSize",16);
 	finalDifficulty = ini_read_real("Game","Difficulty",DF.unlimited);
@@ -14,5 +14,5 @@ if (file_exists("settings.ini")) {
 	
 	alarm[0] = 4;
 } else {
-	show_error("Error code 1: Settings file not found",false)
+	throw ("Settings file not found")
 }

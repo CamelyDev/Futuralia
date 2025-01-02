@@ -20,6 +20,9 @@ if (canDraw) {
 			draw_sprite(sMissingText,0,_x,_y);
 		}
 		draw_set_alpha(1)
+		if !mining {
+			draw_sprite(sNotMineable,0,_x,_y);
+		}
 		draw_sprite(sBreak,(dest*10),_x,_y);
 		if debugdraw {
 			draw_set_font(fnt3);

@@ -8,4 +8,6 @@ text_color = c_black
 hover = 0;
 click = 0;
 
+group = 0;
+
 scr = undefined

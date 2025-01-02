@@ -1,0 +1,17 @@
+(since v0.0.21)
+ADD & FIX:
+fixed player walk sprite and made it worse
+fixed the foosteps sounds being too loud
+added world slots
+fixed the menu to make it look worse (?
+changed all the filenames of the saving system to fit the world slots
+fixed the overlapping blocks
+made xp crumbs
+instead of putting the whole zip with the futuralia frm, i just put the sprites in the zip (the frm generates at the start of a new world anyways)
+fixed the got stronger and rebirth text i think
+made the camera a little more zoomed in
+fixed the walking animation again and made it horrible
+fixed the progression being so slow
+fixed the reach being way too much blocks
+TODO:
+fix the sprite breaking bug when you add resources to the project

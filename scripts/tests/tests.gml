@@ -8,9 +8,44 @@
 #macro WLSPRITE asset_get_index("sBlocks")
 #macro BASEMOD "futuralia"
 #macro MODFORMAT ".frm"
-#macro GAMEVER "0.0.2"
+#macro GAMEVER "0.0.21"
 #macro DEFAULTPATH ""
 #macro MODPATH "future_game/mods/"
+
+function worldgen_create_sprites(bl_struct, mod_filename) {
+	var _str1 = variable_struct_get(bl_struct,mod_filename)
+	var _str = variable_struct_get(_str1,"fixed");
+	//sprite_add(MODPATH + _mod_name + "/" + nm + ".png",1,false,false,0,0)
+	//_str[$ _current_loop].nm + ".png";
+	//sprite_add(MODPATH + _mod_name + "/" + _str[$ _current_loop].nm + ".png";,1,false,false,0,0)
+	var _loop = variable_struct_get_names(_str);
+	var _loop_length = array_length(_loop);
+		
+	for (var j = 0; j < _loop_length; j++) {
+		var _current_loop = _loop[j];
+		var _fn = MODPATH + mod_filename + "/" + _str[$ _current_loop].nm + ".png"
+		_str[$ _current_loop].spr = sprite_add(_fn,1,false,false,0,0)
+	}
+}
+
+function worldgen_regen_sprites(bl_struct, mods_array) {
+	for (var i = 0; i < array_length(mods_array); i++) {
+		var mod_name = mods_array[i];
+		var _str1 = variable_struct_get(bl_struct,mod_name)
+		var _str = variable_struct_get(_str1,"fixed");
+		//sprite_add(MODPATH + _mod_name + "/" + nm + ".png",1,false,false,0,0)
+		//_str[$ _current_loop].nm + ".png";
+		//sprite_add(MODPATH + _mod_name + "/" + _str[$ _current_loop].nm + ".png";,1,false,false,0,0)
+		var _loop = variable_struct_get_names(_str);
+		var _loop_length = array_length(_loop);
+		
+		for (var j = 0; j < _loop_length; j++) {
+			var _current_loop = _loop[j];
+			var _fn = MODPATH + mod_name + "/" + _str[$ _current_loop].nm + ".png"
+			sprite_replace(_str[$ _current_loop].spr,_fn,1,false,false,0,0);
+		}
+	}
+}
 
 function worldgen_parse_mods(array_of_files) {
 	_BL = {
@@ -38,19 +73,20 @@ function worldgen_parse_mods(array_of_files) {
 		struct_set(_BL,_mod_name,_mod_parsed);
 		
 		
-		var _str1 = variable_struct_get(_BL,_mod_name)
-		var _str = variable_struct_get(_str1,"fixed");
-		//sprite_add(MODPATH + _mod_name + "/" + nm + ".png",1,false,false,0,0)
-		//_str[$ _current_loop].nm + ".png";
-		//sprite_add(MODPATH + _mod_name + "/" + _str[$ _current_loop].nm + ".png";,1,false,false,0,0)
-		var _loop = variable_struct_get_names(_str);
-		var _loop_length = array_length(_loop);
+		//var _str1 = variable_struct_get(_BL,_mod_name)
+		//var _str = variable_struct_get(_str1,"fixed");
+		////sprite_add(MODPATH + _mod_name + "/" + nm + ".png",1,false,false,0,0)
+		////_str[$ _current_loop].nm + ".png";
+		////sprite_add(MODPATH + _mod_name + "/" + _str[$ _current_loop].nm + ".png";,1,false,false,0,0)
+		//var _loop = variable_struct_get_names(_str);
+		//var _loop_length = array_length(_loop);
 		
-		for (var j = 0; j < _loop_length; j++) {
-			var _current_loop = _loop[j];
-			var _fn = MODPATH + _mod_name + "/" + _str[$ _current_loop].nm + ".png"
-			_str[$ _current_loop].spr = sprite_add(_fn,1,false,false,0,0)
-		}
+		//for (var j = 0; j < _loop_length; j++) {
+		//	var _current_loop = _loop[j];
+		//	var _fn = MODPATH + _mod_name + "/" + _str[$ _current_loop].nm + ".png"
+		//	_str[$ _current_loop].spr = sprite_add(_fn,1,false,false,0,0)
+		//}
+		worldgen_create_sprites(_BL,_mod_name);
 		//_mod = file_text_open_read(MODPATH + _mod_name + "/" + array_of_files[i]);
 		////show_debug_message(_mod)
 		//_mod_json = file_text_read_string(_mod)
@@ -64,9 +100,9 @@ function worldgen_parse_mods(array_of_files) {
 }
 
 function worldgen_move_files() {
-	if (file_exists("futuralia.zip") and !directory_exists(MODPATH + "futuralia")) {
-		show_debug_message("Init move files")
-		file_copy("futuralia.zip",MODPATH + "futuralia/futuralia.zip")
+	if (file_exists("futuralia_sprites.zip")) {
+		show_debug_message("Init move basegame sprite files")
+		file_copy("futuralia_sprites.zip",MODPATH + "futuralia/futuralia.zip")
 	}
 }
 
@@ -132,8 +168,7 @@ function worldgen_define_chances_ores(blocks_struct) {
 }
 
 function worldgen_init() {
-	worldgen_basegame();
-	worldgen_oredlc();
+	//worldgen_oredlc();
 	//worldgen_move_files()
 	//enum BL {
 	//	grass,
@@ -182,14 +217,15 @@ function worldgen_init() {
 		hoe,
 		shovel
 	}
-	globalvar worldArray, regionArray, chunkArray, blockArray, currentPos, blocks, items, spriteBlocks, BLGLOBAL, CHANCES;
+	globalvar worldArray, regionArray, chunkArray, blockArray, currentPos, blocks, items, spriteBlocks, BLGLOBAL, CHANCES, __TEMP;
 	//blockGrid = ds_grid_create(finalWorldSize * CHUNKSIZE,HEIGHT);
-	regionArray = array_create(1);
-	chunkArray = array_create(1);
-	blockArray = array_create(1);
-	worldArray = array_create(1);
+	regionArray = array_create(0);
+	chunkArray = array_create(0);
+	blockArray = array_create(0);
+	worldArray = array_create(0);
 	currentPos = 0;
-	blocks = array_create(4);
+	__TEMP = ""
+	blocks = array_create(0);
 	var mods = worldgen_list_mods(MODPATH);
 	BLGLOBAL = worldgen_parse_mods(mods);
 	show_debug_message(BLGLOBAL)
@@ -197,6 +233,8 @@ function worldgen_init() {
 	CHANCES = array_create(0)
 	//array_pop(CHANCES);
 	worldgen_define_chances_ores(BLGLOBAL)
+	show_debug_message("About to regen sprites")
+	worldgen_regen_sprites(BLGLOBAL,mods)
 }
 
 function worldgen_save_mod(_mod, _mod_name = "futuralia") {
@@ -456,7 +494,7 @@ function call_block_add(bl) {
 		inst = instance_create_layer(_x,_y,"Blocks",oSolid);
 	} else {
 		inst = _check;
-		inst.index = 0;
+		blockArray[inst.index] = 0;
 	}
 	inst.index = block_gen(bl);
 }
@@ -470,6 +508,20 @@ function fill_arrs(wrld,reg,chu,blo) {
 			array_push(blockArray,blo[i]);
 		}
 	}	
+}
+
+function block_get_sprite(name) {
+	__TEMP = name;
+	struct_foreach(BLGLOBAL, function (_name,_value) {
+		if (is_struct(_value)) {
+			struct_foreach(_value.fixed,function (__name, __value) {
+				if (__value.nm == __TEMP) {
+					return __value.spr;
+				}
+			});
+		}
+	});
+	return ;
 }
 
 function world_gen(pos,size,seed) {
@@ -500,7 +552,7 @@ function world_gen(pos,size,seed) {
 	// TODO: CAVE GEN
 	var noise_value = new FastNoiseLite(seed);
 	noise_value.SetNoiseType(FastNoiseLite.NoiseType.Perlin);
-	noise_value.SetFractalOctaves(16);
+	noise_value.SetFractalOctaves(32);
 	noise_value.SetFrequency(0.04)
 	var maxheight = size.y
 	var posx = (pos * CHUNKSIZE);
@@ -607,6 +659,8 @@ function cave_gen(fillPercent,seed) {
 }
 
 function tst_create(){
+	worldgen_move_files()
+	worldgen_basegame();
 	//first is position in region, second is size in chunks on a vector2
 	//chunk size = 32 blocks
 	//region size = 16 chunks (regions are not repeated on y axis, only x)
@@ -650,7 +704,7 @@ function tst_save() {
 	buffer_write(buff1,buffer_string,playerJson);
 	var compbuff1 = buffer_compress(buff1,0,buffer_tell(buff1));
 	//saveStructs(DEFAULTPATH + "blocks.ini",blockArray);
-	buffer_save(compbuff1,DEFAULTPATH + "playerData.sav");
+	buffer_save(compbuff1,DEFAULTPATH + "playerData-" + string(worldSlot));
 	buffer_delete(compbuff1);
 	buffer_delete(buff1);
 	
@@ -660,37 +714,38 @@ function tst_save() {
 	buffer_write(buff,buffer_string,json_stringify(blockArray));
 	var compbuff = buffer_compress(buff,0,buffer_tell(buff));
 	//saveStructs(DEFAULTPATH + "blocks.ini",blockArray);
-	buffer_save(compbuff,DEFAULTPATH + "blocks.sav");
+	buffer_save(compbuff,DEFAULTPATH + "blocks-" + string(worldSlot));
 	buffer_delete(compbuff);
 	buffer_delete(buff);
 	//saveStructs(DEFAULTPATH + "blocks.ini", blockArray);
-	saveStructs(DEFAULTPATH + "active_blocks.ini", BLGLOBAL);
-	saveStructs(DEFAULTPATH + "worlds.ini", worldArray);
-	saveStructs(DEFAULTPATH + "regions.ini", regionArray);
-	saveStructs(DEFAULTPATH + "chunks.ini", chunkArray);
+	saveStructs(DEFAULTPATH + "active_blocks-" + string(worldSlot), BLGLOBAL);
+	saveStructs(DEFAULTPATH + "world-" + string(worldSlot), worldArray);
+	saveStructs(DEFAULTPATH + "regions-" + string(worldSlot), regionArray);
+	saveStructs(DEFAULTPATH + "chunks-" + string(worldSlot), chunkArray);
 	//saveGrid(DEFAULTPATH + "grid.ini",blockGrid)
 	return true;
 }
 
 function tst_load(){
+	//worldgen_basegame();
 	var array = array_create(0);
 	instance_destroy(oSolid);
 	//load the buffer
-	var buff = buffer_load(DEFAULTPATH + "blocks.sav");
+	var buff = buffer_load(DEFAULTPATH + "blocks-" + string(worldSlot));
 	var decompbuff = buffer_decompress(buff)
 	var str = buffer_read(decompbuff,buffer_string);
 	array = json_parse(str);
 	
-	var buff1 = buffer_load(DEFAULTPATH + "playerData.sav");
+	var buff1 = buffer_load(DEFAULTPATH + "playerData-" + string(worldSlot));
 	var decompbuff1 = buffer_decompress(buff1)
 	var str1 = buffer_read(decompbuff1,buffer_string);
 	var playerData = json_parse(str1);
 	show_debug_message(playerData)
-	BLGLOBAL = loadStructs(DEFAULTPATH + "active_blocks.ini")
+	BLGLOBAL = loadStructs(DEFAULTPATH + "active_blocks-" + string(worldSlot))
 	blockArray = array;
-	chunkArray = loadStructs(DEFAULTPATH + "chunks.ini");
-	regionArray = loadStructs(DEFAULTPATH + "regions.ini");
-	worldArray = loadStructs(DEFAULTPATH + "worlds.ini");
+	chunkArray = loadStructs(DEFAULTPATH + "chunks-" + string(worldSlot));
+	regionArray = loadStructs(DEFAULTPATH + "regions-" + string(worldSlot));
+	worldArray = loadStructs(DEFAULTPATH + "world-" + string(worldSlot));
 	//blockGrid = loadGrid(DEFAULTPATH + "grid.ini",new vector2(finalWorldSize * CHUNKSIZE,HEIGHT));
 	//var _vx = camera_get_view_x(view_camera[0]);
 	//var _vy = camera_get_view_y(view_camera[0]);
@@ -745,7 +800,7 @@ function get_hover() {
 	return point_in_rectangle(_mouseX,_mouseY,x,y,x + width,y + height);
 }
 
-function create_button(_x,_y,_width,_height,_text,_script) {
+function create_button(_x,_y,_width,_height,_text,_script,_group) {
 	var _button = instance_create_layer(_x,_y,"Instances",oButton);
 	
 	with (_button) {
@@ -753,6 +808,7 @@ function create_button(_x,_y,_width,_height,_text,_script) {
 		height = _height
 		text = _text
 		scr = _script
+		group = _group
 	}
 	
 	return _button;
@@ -760,22 +816,52 @@ function create_button(_x,_y,_width,_height,_text,_script) {
 
 function ws_tiny() {
 	oSettings.subselector[ST.size] = WS.tiny;
+	show_debug_message("Chunk size set to tiny")
 }
 
 function ws_medium() {
 	oSettings.subselector[ST.size] = WS.medium;
+	show_debug_message("Chunk size set to medium")
 }
 
 function ws_large() {
 	oSettings.subselector[ST.size] = WS.large;
+	show_debug_message("Chunk size set to large")
 }
 
 function ws_giant() {
 	oSettings.subselector[ST.size] = WS.giant;
+	show_debug_message("Chunk size set to giant")
 }
 
 function ws_extreme() {
 	oSettings.subselector[ST.size] = WS.extreme;
+	show_debug_message("Chunk size set to extreme")
+}
+
+function wl_1() {
+	worldSlot = 1;
+	show_debug_message("World Slot Changed: " + string(worldSlot));
+}
+
+function wl_2() {
+	worldSlot = 2;
+	show_debug_message("World Slot Changed: " + string(worldSlot));
+}
+
+function wl_3() {
+	worldSlot = 3;
+	show_debug_message("World Slot Changed: " + string(worldSlot));
+}
+
+function wl_4() {
+	worldSlot = 4;
+	show_debug_message("World Slot Changed: " + string(worldSlot));
+}
+
+function wl_5() {
+	worldSlot = 5;
+	show_debug_message("World Slot Changed: " + string(worldSlot));
 }
 
 function st_load() {
