@@ -8,15 +8,16 @@ switch(real(subselector[ST.size])) {
 }
 finalDifficulty = real(subselector[ST.diff]);
 //||||||||||||||||||||||||||||||
-ini_open("settings.ini");
+ini_open("settings");
 //...............................
 ini_write_real("Game","WorldSize",finalWorldSize);
 ini_write_real("Game","Difficulty",finalDifficulty);
 //...............................
 ini_close();
 //||||||||||||||||||||||||||||||
-file_delete("blocks.sav");
-file_delete("chunks.ini");
-file_delete("regions.ini");
-file_delete("worlds.ini");
+file_delete("blocks-" + string(worldSlot));
+file_delete("chunks-" + string(worldSlot));
+file_delete("regions-" + string(worldSlot));
+file_delete("world-" + string(worldSlot));
+file_delete("playerData-" + string(worldSlot));
 alarm[0] = 4;

@@ -53,13 +53,15 @@ switch(curselector) {
 }
 
 if (mouse_check_button(mb_right)) {
-	if (distance_to_object(oPlayer2) < 6*BS) and (curblock != undefined) and (fpi == 0) {
+	if (distance_to_object(oPlayer2) < 4*BS) and (curblock != undefined) and (fpi == 0) {
 		//with (oSolid) {
 		//	event_user(0);
 		//}
-		var bl = variable_clone(curblock)
-		bl.pos = new Vector2(x div BS, y div BS);
-		call_block_add(bl);
+		if (!place_meeting(x,y,oSolid)) {
+			var bl = variable_clone(curblock)
+			bl.pos = new Vector2(x div BS, y div BS);
+			call_block_add(bl);
+		}
 		//var bl = blocks[curblock];
 		//var tile;
 		//switch (bl.tlt) {

@@ -1,7 +1,8 @@
 //begteam
 #macro BLOCKSTRIP 34
-globalvar settingsArray, finalWorldSize, finalDifficulty, spriteArray, sprload;
+globalvar settingsArray, finalWorldSize, finalDifficulty, spriteArray, sprload, worldSlot;
 settingsArray = [];
+worldSlot = 1;
 enum ST {
 	start,
 	size,

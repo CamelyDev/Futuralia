@@ -8,7 +8,8 @@ canDraw = false;
 //tilemap_walls = layer_tilemap_create("Walls",0,0,BLSPRITE,finalWorldSize*CHUNKSIZE,HEIGHT)
 //tilemap_background = layer_tilemap_create("Background",0,0,BLSPRITE,finalWorldSize*CHUNKSIZE,HEIGHT)
 worldgen_init();
-random_set_seed(1495)
+randomize()
+random_set_seed(irandom(99999));
 
 //light_layer = layer_get_id("Lights");
 //layer_script_begin(light_layer,light_draw_begin);
