@@ -8,7 +8,7 @@ sprite_broadcast("footstep1",function(){
 		default: sound = snd_footstep_solid1; break;
 	}
 	
-	audio_play_sound(sound,11,false,random_range(0.89,0.98),0,random_range(0.9,1.1));
+	audio_play_sound(sound,11,false,random_range(0.4,0.5),0,random_range(0.8,1.2));
 })
 
 sprite_broadcast("footstep2",function(){
@@ -21,5 +21,5 @@ sprite_broadcast("footstep2",function(){
 		default: sound = snd_footstep_solid2; break;
 	}
 	
-	audio_play_sound(sound,11,false,random_range(0.89,0.98),0,random_range(0.9,1.1));
+	audio_play_sound(sound,11,false,random_range(0.4,0.5),0,random_range(0.8,1.2));
 })

@@ -1,1 +1,0 @@
-text_color = c_black

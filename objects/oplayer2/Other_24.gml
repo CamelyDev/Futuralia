@@ -160,6 +160,13 @@ if (max_tm) {
 //----EXTRAS----
 mask_index = sPlayerMask;
 
+//switch(image_index) {
+//	case 0: head_offset = 1; break;
+//	case 1: head_offset = 2; break;
+//	case 2: head_offset = 1; break;
+//	case 3: head_offset = 0; break;
+//}
+
 if (rest_xp > 0) {
 	xp++;
 	show_xp++;
@@ -168,12 +175,12 @@ if (rest_xp > 0) {
 xp_max = xp_curve();
 if (xp_max - show_xp <= 0) {
 	strength++;
-	strength_bonus = 1 + ((strength + rebirths) * 0.007)
+	strength_bonus = 1 + ((strength + (rebirths * 2.25)) * 0.5)
 	audio_stop_sound(snd_strength);
 	audio_play_sound(snd_strength,1,false);
 	got_stronger = 256;
 	xp_max = xp_curve();
 	show_xp = 0;
 }
-got_stronger -= 2;
-rebirthed--;
+if (got_stronger > 0) got_stronger -= 2;
+if (rebirthed > 0) rebirthed--;

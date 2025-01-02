@@ -57,9 +57,11 @@ if (mouse_check_button(mb_right)) {
 		//with (oSolid) {
 		//	event_user(0);
 		//}
-		var bl = variable_clone(curblock)
-		bl.pos = new Vector2(x div BS, y div BS);
-		call_block_add(bl);
+		if (!place_meeting(x,y,oSolid)) {
+			var bl = variable_clone(curblock)
+			bl.pos = new Vector2(x div BS, y div BS);
+			call_block_add(bl);
+		}
 		//var bl = blocks[curblock];
 		//var tile;
 		//switch (bl.tlt) {

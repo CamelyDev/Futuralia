@@ -30,7 +30,7 @@ make_rebirth = function() {
 	if (strength >= strength_to_rebirth) {
 		rebirths++;
 		strength = 0;
-		strength_to_rebirth += 8;
+		strength_to_rebirth += 4;
 		rebirthed = 256;
 		audio_play_sound(snd_rebirth,1,false);
 	}
@@ -68,6 +68,7 @@ what = true;
 free = false;
 jumping = false;
 attach_point = new vector2(0,-25);
+head_offset = 0;
 rotated = false;
 rotation = 0;
 rotdraw = 0;
