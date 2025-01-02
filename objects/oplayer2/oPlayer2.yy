@@ -45,7 +45,7 @@
     {"$GMObjectProperty":"v1","%Name":"show_xp","filters":[],"listItems":[],"multiselect":false,"name":"show_xp","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":0,},
     {"$GMObjectProperty":"v1","%Name":"rebirths","filters":[],"listItems":[],"multiselect":false,"name":"rebirths","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":0,},
     {"$GMObjectProperty":"v1","%Name":"strength","filters":[],"listItems":[],"multiselect":false,"name":"strength","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":0,},
-    {"$GMObjectProperty":"v1","%Name":"strength_to_rebirth","filters":[],"listItems":[],"multiselect":false,"name":"strength_to_rebirth","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"32","varType":0,},
+    {"$GMObjectProperty":"v1","%Name":"strength_to_rebirth","filters":[],"listItems":[],"multiselect":false,"name":"strength_to_rebirth","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"16","varType":0,},
   ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",

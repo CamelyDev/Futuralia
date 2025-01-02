@@ -1,6 +1,6 @@
 menuState = 0;
-createbasegame = create_button(580,140,224,64,"Update Game Files",worldgen_basegame);
-createbasegame = create_button(580,236,224,64,"Update DLCs",worldgen_oredlc);
+//createbasegame = create_button(580,140,224,64,"Update Game Files",worldgen_basegame);
+//createbasegame = create_button(580,236,224,64,"Update DLCs",worldgen_oredlc);
 ws0 = create_button(224,400,160,64,"Tiny (3 chunks)",ws_tiny);
 ws1 = create_button(416,400,160,64,"Medium (6 chunks)",ws_medium);
 ws2 = create_button(608,400,160,64,"Large (12 chunks)",ws_large);

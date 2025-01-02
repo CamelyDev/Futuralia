@@ -168,7 +168,7 @@ if (rest_xp > 0) {
 xp_max = xp_curve();
 if (xp_max - show_xp <= 0) {
 	strength++;
-	strength_bonus = 1 + ((strength + rebirths) * 0.007)
+	strength_bonus = 1 + ((strength + (rebirths * 1.75)) * 0.4)
 	audio_stop_sound(snd_strength);
 	audio_play_sound(snd_strength,1,false);
 	got_stronger = 256;

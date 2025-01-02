@@ -49,9 +49,7 @@ function worldgen_parse_mods(array_of_files) {
 		for (var j = 0; j < _loop_length; j++) {
 			var _current_loop = _loop[j];
 			var _fn = MODPATH + _mod_name + "/" + _str[$ _current_loop].nm + ".png"
-			if (_str[$ _current_loop].spr == "") {
-				_str[$ _current_loop].spr = sprite_add(_fn,1,false,false,0,0)
-			}
+			_str[$ _current_loop].spr = sprite_add(_fn,1,false,false,0,0)
 		}
 		//_mod = file_text_open_read(MODPATH + _mod_name + "/" + array_of_files[i]);
 		////show_debug_message(_mod)
@@ -106,7 +104,7 @@ function worldgen_define_chances_ores(blocks_struct) {
 						var bohl = __value._blockore._harvest_level;
 						if (bohl > 0) {
 							array_push(CHANCES,[__value._blockore._base_chance, __value]);
-							//show_debug_message("Pushed base chance: " + string(__value._blockore._base_chance) + " for block name: " + __value.nm);
+							show_debug_message("Pushed base chance: " + string(__value._blockore._base_chance) + " for block: " + string(__value));
 						} else {
 							show_debug_message("Not enough harvest level to be scored for block name: " + __value.nm)
 						}
@@ -121,15 +119,22 @@ function worldgen_define_chances_ores(blocks_struct) {
 			show_debug_message("Not a mod struct for mod name: " + _name)
 		}
 	});
+	array_sort(CHANCES,function(a,b) {
+		return b[0] - a[0];
+	});
+	show_debug_message(json_stringify(CHANCES))
 	//TODO finish this function to define ore chances
 	//loop through all of the blocks with >0 harvest level
 	//store all of the chances of them in an array
 	//order the blocks by rarity, and add a reference to them in the array
 	//return the array to put in a global var
+	// ----- DONE -----
 }
 
 function worldgen_init() {
-	worldgen_move_files()
+	worldgen_basegame();
+	worldgen_oredlc();
+	//worldgen_move_files()
 	//enum BL {
 	//	grass,
 	//	dirt,
@@ -332,8 +337,10 @@ function worldgen_get_ore(xx,yy,mult) {
 	//if gen-chance is less or equal than block-chance set block copy
 	//do that until there is no block ores left
 	var chanceResult, bl, _bl, oldseed;
-	//randomize()
+	oldseed = random_get_seed()
+	randomize()
 	chanceResult = chanceCustom(mult);
+	random_set_seed(oldseed)
 	bl = chanceResult;
 	//show_debug_message(chanceResult);
 	//switch(chanceResult) {
@@ -657,9 +664,10 @@ function tst_save() {
 	buffer_delete(compbuff);
 	buffer_delete(buff);
 	//saveStructs(DEFAULTPATH + "blocks.ini", blockArray);
-	saveStructs(DEFAULTPATH + "worlds.ini",worldArray);
-	saveStructs(DEFAULTPATH + "regions.ini",regionArray);
-	saveStructs(DEFAULTPATH + "chunks.ini",chunkArray);
+	saveStructs(DEFAULTPATH + "active_blocks.ini", BLGLOBAL);
+	saveStructs(DEFAULTPATH + "worlds.ini", worldArray);
+	saveStructs(DEFAULTPATH + "regions.ini", regionArray);
+	saveStructs(DEFAULTPATH + "chunks.ini", chunkArray);
 	//saveGrid(DEFAULTPATH + "grid.ini",blockGrid)
 	return true;
 }
@@ -678,7 +686,7 @@ function tst_load(){
 	var str1 = buffer_read(decompbuff1,buffer_string);
 	var playerData = json_parse(str1);
 	show_debug_message(playerData)
-	
+	BLGLOBAL = loadStructs(DEFAULTPATH + "active_blocks.ini")
 	blockArray = array;
 	chunkArray = loadStructs(DEFAULTPATH + "chunks.ini");
 	regionArray = loadStructs(DEFAULTPATH + "regions.ini");

@@ -12,8 +12,14 @@ draw_set_color(c_white)
 draw_set_halign(fa_center);
 draw_set_valign(fa_bottom);
 draw_set_font(fnt2);
-draw_set_alpha(got_stronger/256);
-draw_text(x,y-27,"GOT STRONGER.");
-draw_set_alpha(rebirthed/256);
-draw_text(x,y-27,"REBIRTH NUMBER " + string(rebirths) + " ACTIVE.");
+if (got_stronger > 0) and (rebirthed == 0) {
+	draw_set_alpha(got_stronger/256);
+	draw_text(x,y-27,"GOT STRONGER.");
+} else if (got_stronger == 0) and (rebirthed > 0) {
+	draw_set_alpha(rebirthed/256);
+	draw_text(x,y-27,"REBIRTH NUMBER " + string(rebirths) + " ACTIVE.");
+} else if (got_stronger > 0) and (rebirthed > 0) {
+	draw_set_alpha(rebirthed/256);
+	draw_text(x,y-27,"REBIRTH NUMBER " + string(rebirths) + " ACTIVE.");
+}
 draw_set_alpha(1);
