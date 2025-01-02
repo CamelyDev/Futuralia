@@ -21,7 +21,7 @@ if (canDraw) {
 		}
 		draw_set_alpha(1)
 		draw_sprite(sBreak,(dest*10),_x,_y);
-		if debug {
+		if debugdraw {
 			draw_set_font(fnt3);
 			draw_set_color(c_white);
 			draw_text(_x,_y,string(input_amount));

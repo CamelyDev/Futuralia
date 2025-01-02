@@ -68,6 +68,7 @@
     {"name":"oSettings","order":2,"path":"objects/oSettings/oSettings.yy",},
     {"name":"oSolid","order":1,"path":"objects/oSolid/oSolid.yy",},
     {"name":"oTest","order":11,"path":"objects/oTest/oTest.yy",},
+    {"name":"oXpCrumb","order":12,"path":"objects/oXpCrumb/oXpCrumb.yy",},
     {"name":"Room2","order":1,"path":"rooms/Room2/Room2.yy",},
     {"name":"__IotaClassAlarm","order":1,"path":"scripts/__IotaClassAlarm/__IotaClassAlarm.yy",},
     {"name":"__IotaConfig","order":2,"path":"scripts/__IotaConfig/__IotaConfig.yy",},
@@ -174,6 +175,7 @@
     {"name":"spr_stanncam_zone_u","order":4,"path":"sprites/spr_stanncam_zone_u/spr_stanncam_zone_u.yy",},
     {"name":"sUIReference","order":12,"path":"sprites/sUIReference/sUIReference.yy",},
     {"name":"sWhite","order":1,"path":"sprites/sWhite/sWhite.yy",},
+    {"name":"sXpCrumb","order":11,"path":"sprites/sXpCrumb/sXpCrumb.yy",},
     {"name":"tBlocks","order":1,"path":"tilesets/tBlocks/tBlocks.yy",},
   ],
 }

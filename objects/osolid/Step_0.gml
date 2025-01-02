@@ -24,7 +24,12 @@ if (keyboard_check(vk_control) or mouse_check_button(mb_left)) and (distance_to_
 
 if (dest >= 1) {
 	instance_destroy();
-	oPlayer2.xp_add(blockArray[index]._blockore._drop_xp);
+	//oPlayer2.xp_add(blockArray[index]._blockore._drop_xp);
+	if (blockArray[index]._blockore._drop_xp != 0) {
+		instance_create_depth(x+4,y+4,depth,oXpCrumb,{
+			xp_to_add: blockArray[index]._blockore._drop_xp
+		});
+	}
 	blockArray[index] = 0;
 	//ds_grid_set(blockGrid,x div BS, abs(y div BS),-1);
 }
