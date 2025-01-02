@@ -53,7 +53,7 @@ switch(curselector) {
 }
 
 if (mouse_check_button(mb_right)) {
-	if (distance_to_object(oPlayer2) < 6*BS) and (curblock != undefined) and (fpi == 0) {
+	if (distance_to_object(oPlayer2) < 4*BS) and (curblock != undefined) and (fpi == 0) {
 		//with (oSolid) {
 		//	event_user(0);
 		//}

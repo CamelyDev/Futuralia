@@ -82,3 +82,4 @@ Blocks load/uncompress method
 15. parse blocks and stuff from json into the blockarray
 16. game logic: mine stuff, gain level. with more level, mine more stuff. with more stuff, sell and rebirth.
 17. once a button is selected on the menu, keep it green until you select another one (remember which option you chose)
+18. in-game modding at runtime

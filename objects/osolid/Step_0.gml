@@ -1,6 +1,6 @@
 //begteam
 
-if (keyboard_check(vk_control) or mouse_check_button(mb_left)) and (distance_to_object(oCursor) < 1) and (distance_to_object(oPlayer2) < 4*BS) {
+if (mouse_check_button(mb_left)) and (distance_to_object(oCursor) < 1) and (distance_to_object(oPlayer2) < 4*BS) {
 	if(oPlayer2.strength >= blockArray[index]._blockore._harvest_level) {
 		mining = true;
 		dest += abs(-(blockArray[index].res) / (101 - oPlayer2.strength_bonus));
@@ -12,6 +12,7 @@ if (keyboard_check(vk_control) or mouse_check_button(mb_left)) and (distance_to_
 		}
 	} else {
 		mining = false;
+		fsi = 8;
 	}
 } else {
 	mining = true;
