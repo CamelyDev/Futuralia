@@ -55,7 +55,7 @@
     {"$GMFolder":"","%Name":"Utilities","folderPath":"folders/Utilities.yy","name":"Utilities","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "IncludedFiles":[
-    {"$GMIncludedFile":"","%Name":"futuralia.zip","CopyToMask":-1,"filePath":"datafiles","name":"futuralia.zip","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"futuralia_sprites.zip","CopyToMask":-1,"filePath":"datafiles","name":"futuralia_sprites.zip","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
   "isEcma":false,
   "LibraryEmitters":[],
