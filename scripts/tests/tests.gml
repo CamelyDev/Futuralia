@@ -8,7 +8,7 @@
 #macro WLSPRITE asset_get_index("sBlocks")
 #macro BASEMOD "futuralia"
 #macro MODFORMAT ".frm"
-#macro GAMEVER "0.0.21"
+#macro GAMEVER "0.0.22"
 #macro DEFAULTPATH ""
 #macro MODPATH "future_game/mods/"
 
@@ -52,7 +52,7 @@ function worldgen_parse_mods(array_of_files) {
 		is_loaded: false
 	}
 	for (var i = 0; i < array_length(array_of_files); i++) {
-		show_debug_message("Loading mod number " + string(i) + ", name " + array_of_files[i])
+		print("Loading mod number " + string(i) + ", name " + array_of_files[i])
 		_mod_name = array_of_files[i];
 		_mod_zip = MODPATH + _mod_name + "/" + _mod_name + ".zip"
 		if (file_exists(_mod_zip)) {
@@ -60,7 +60,7 @@ function worldgen_parse_mods(array_of_files) {
 			if (_zip <= 0) {
 				throw ("Cannot extract mod file " + _mod_zip + ". Please contact the developer of the mod or try again later.")
 			} else {
-				show_debug_message("Extracted mod file " + _mod_zip + " succesfully. Now loading...")
+				print("Extracted mod file " + _mod_zip + " succesfully. Now loading...")
 			}
 		}
 		_mod_fn = MODPATH + _mod_name + "/" + array_of_files[i] + MODFORMAT;
@@ -69,7 +69,7 @@ function worldgen_parse_mods(array_of_files) {
 		_mod_json = file_text_read_string(_mod)
 		//show_debug_message(_mod_json)
 		_mod_parsed = json_parse(_mod_json);
-		//show_debug_message(_mod_parsed)
+		print(_mod_parsed)
 		struct_set(_BL,_mod_name,_mod_parsed);
 		
 		
@@ -101,7 +101,7 @@ function worldgen_parse_mods(array_of_files) {
 
 function worldgen_move_files() {
 	if (file_exists("futuralia_sprites.zip")) {
-		show_debug_message("Init move basegame sprite files")
+		print("Init move basegame sprite files")
 		file_copy("futuralia_sprites.zip",MODPATH + "futuralia/futuralia.zip")
 	}
 }
@@ -120,7 +120,7 @@ function worldgen_list_mods(directory) {
 	}
 
 	for(var index = 0; index < ds_list_size(ds_folders); index++) {
-		show_debug_message(ds_folders[| index]);
+		print(ds_folders[| index]);
 		array_push(_array,ds_folders[| index]);
 	}
 	
@@ -140,25 +140,25 @@ function worldgen_define_chances_ores(blocks_struct) {
 						var bohl = __value._blockore._harvest_level;
 						if (bohl > 0) {
 							array_push(CHANCES,[__value._blockore._base_chance, __value]);
-							show_debug_message("Pushed base chance: " + string(__value._blockore._base_chance) + " for block: " + string(__value));
+							print("Pushed base chance: " + string(__value._blockore._base_chance) + " for block: " + string(__value));
 						} else {
-							show_debug_message("Not enough harvest level to be scored for block name: " + __value.nm)
+							print("Not enough harvest level to be scored for block name: " + __value.nm)
 						}
 					} else {
-						show_debug_message("No chances defined for block name: " + __value.nm)
+						print("No chances defined for block name: " + __value.nm)
 					}
 				} else {
-					show_debug_message("Not a block for index name: " + __name)
+					print("Not a block for index name: " + __name)
 				}
 			});
 		} else {
-			show_debug_message("Not a mod struct for mod name: " + _name)
+			print("Not a mod struct for mod name: " + _name)
 		}
 	});
 	array_sort(CHANCES,function(a,b) {
 		return b[0] - a[0];
 	});
-	show_debug_message(json_stringify(CHANCES))
+	print(json_stringify(CHANCES))
 	//TODO finish this function to define ore chances
 	//loop through all of the blocks with >0 harvest level
 	//store all of the chances of them in an array
@@ -198,7 +198,8 @@ function worldgen_init() {
 	//}
 	
 	//worldgen_fixed()
-	
+	worldgen_move_files()
+	worldgen_basegame();
 	enum IT {
 		pickaxe,
 		dirt,
@@ -228,12 +229,12 @@ function worldgen_init() {
 	blocks = array_create(0);
 	var mods = worldgen_list_mods(MODPATH);
 	BLGLOBAL = worldgen_parse_mods(mods);
-	show_debug_message(BLGLOBAL)
+	print(BLGLOBAL)
 	items = array_create(10);
 	CHANCES = array_create(0)
 	//array_pop(CHANCES);
 	worldgen_define_chances_ores(BLGLOBAL)
-	show_debug_message("About to regen sprites")
+	print("About to regen sprites")
 	worldgen_regen_sprites(BLGLOBAL,mods)
 }
 
@@ -242,24 +243,24 @@ function worldgen_save_mod(_mod, _mod_name = "futuralia") {
 		fixed: _mod
 	}
 	
-	show_debug_message("Mod saving init")
+	print("Mod saving init")
 	_bl_text = json_stringify(_bl,false);
-	show_debug_message("Stringified")
+	print("Stringified")
 	_file = file_text_open_write(MODPATH + _mod_name + "/" + _mod_name + ".frm");
-	show_debug_message("Opened file")
+	print("Opened file")
 	file_text_write_string(_file,_bl_text);
-	show_debug_message("Wrote to file")
+	print("Wrote to file")
 	file_text_close(_file);
-	show_debug_message("Closed file")
+	print("Closed file")
 }
 
 function worldgen_oredlc() {
 	mo_ores = {
 		
 	}
-	show_debug_message("Block struct init")
+	print("Block struct init")
 	//Egg Ore, 0.45 resistance, 1/7 chance, 5 harvest level, 500 xp
-	struct_set(mo_ores,"egg_ore",new block("Egg Ore","",0,0.45,new vector2(0,0),BT.SOLID,"mo_ores",new block_ore(1/7,32,512)))
+	struct_set(mo_ores,"egg_ore",new block("Egg Ore","",0,0.45,new vector2(0,0),BT.SOLID,"ore","mo_ores",new block_ore(1/7,32,512)))
 	
 	worldgen_save_mod(mo_ores,"mo_ores");
 }
@@ -268,35 +269,35 @@ function worldgen_basegame() {
 	futuralia = {
 		
 	}
-	show_debug_message("Block struct init")
+	print("Block struct init")
 	
 	//blocks[BL.grass] = new block("Grass Block",TT.blocks_main,0,2.3,new vector2(0,0),BT.SOLID);
-	struct_set(futuralia,"grass_block",new block("Grass Block","",0,2.3,new vector2(0,0),BT.SOLID,"futuralia"))
-	show_debug_message("First block")
+	struct_set(futuralia,"grass_block",new block("Grass Block","",0,2.3,new vector2(0,0),BT.SOLID,"plant","futuralia"))
+	print("First block")
 	//blocks[BL.dirt] = new block("Dirt",TT.blocks_main,1,2.4,new vector2(0,0),BT.SOLID);
-	struct_set(futuralia,"dirt",new block("Dirt","",1,2.4,new vector2(0,0),BT.SOLID,"futuralia"));
+	struct_set(futuralia,"dirt",new block("Dirt","",1,2.4,new vector2(0,0),BT.SOLID,"plant","futuralia"));
 	//blocks[BL.stone] = new block("Stone",TT.blocks_main,2,1.6,new vector2(0,0),BT.SOLID)
-	struct_set(futuralia,"stone",new block("Stone","",2,1.6,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(100,0,2)));
+	struct_set(futuralia,"stone",new block("Stone","",2,1.6,new vector2(0,0),BT.SOLID,"rock","futuralia",new block_ore(100,0,2)));
 	//blocks[BL.brick] = new block("Bricks",TT.blocks_main,3,2.2,new vector2(0,0),BT.SOLID)
-	struct_set(futuralia,"brick",new block("Bricks","",3,2.2,new vector2(0,0),BT.SOLID,"futuralia"));
+	struct_set(futuralia,"brick",new block("Bricks","",3,2.2,new vector2(0,0),BT.SOLID,"rock","futuralia"));
 	//blocks[BL.woodplanks] = new block("Wood Planks",TT.blocks_main,15,2,new vector2(0,0),BT.SOLID,4))
-	struct_set(futuralia,"wood_planks",new block("Wood Planks","",15,2,new vector2(0,0),BT.SOLID,"futuralia"));
+	struct_set(futuralia,"wood_planks",new block("Wood Planks","",15,2,new vector2(0,0),BT.SOLID,"solid","futuralia"));
 	//blocks[BL.woodslabup] = new block("Wood Slab (Up)",TT.blocks_main,16,2,new vector2(0,0),BT.SLABUP,5))
-	struct_set(futuralia,"wood_slab_up",new block("Wood Slab (Up)","",16,2,new vector2(0,0),BT.SLABUP,"futuralia"))
+	struct_set(futuralia,"wood_slab_up",new block("Wood Slab (Up)","",16,2,new vector2(0,0),BT.SLABUP,"solid","futuralia"))
 	//blocks[BL.woodslabdown] = new block("Wood Slab (Down)",TT.blocks_main,17,2,new vector2(0,0),BT.SLABDOWN,6))
-	struct_set(futuralia,"wood_slab_down",new block("Wood Slab (Down)","",17,2,new vector2(0,0),BT.SLABDOWN,"futuralia"))
+	struct_set(futuralia,"wood_slab_down",new block("Wood Slab (Down)","",17,2,new vector2(0,0),BT.SLABDOWN,"solid","futuralia"))
 	//blocks[BL.woodslableft] = new block("Wood Slab (Left)",TT.blocks_main,18,2,new vector2(0,0),BT.SLABLEFT,7))
-	struct_set(futuralia,"wood_slab_left",new block("Wood Slab (Left)","",18,2,new vector2(0,0),BT.SLABLEFT,"futuralia"))
+	struct_set(futuralia,"wood_slab_left",new block("Wood Slab (Left)","",18,2,new vector2(0,0),BT.SLABLEFT,"solid","futuralia"))
 	//blocks[BL.woodslabright] = new block("Wood Slab (Right)",TT.blocks_main,19,2,new vector2(0,0),BT.SLABRIGHT,8))
-	struct_set(futuralia,"wood_slab_right",new block("Wood Slab (Right)","",19,2,new vector2(0,0),BT.SLABRIGHT,"futuralia"))
+	struct_set(futuralia,"wood_slab_right",new block("Wood Slab (Right)","",19,2,new vector2(0,0),BT.SLABRIGHT,"solid","futuralia"))
 	//blocks[BL.woodwall] = new block("Wood Wall",TT.walls_main,20,2.6,new vector2(0,0),BT.PASSABLE,9))
-	struct_set(futuralia,"wood_wall",new block("Wood Wall","",20,2.6,new vector2(0,0),BT.PASSABLE,"futuralia"))
+	struct_set(futuralia,"wood_wall",new block("Wood Wall","",20,2.6,new vector2(0,0),BT.PASSABLE,"none","futuralia"))
 	//blocks[BL.woodchairleft] = new block("Wood Chair (Left)",TT.background_main,21,2.5,new vector2(0,0),BT.PASSABLE,10))
-	struct_set(futuralia,"wood_chair_left",new block("Wood Chair (Left)","",21,2.5,new vector2(0,0),BT.PASSABLE,"futuralia"))
+	struct_set(futuralia,"wood_chair_left",new block("Wood Chair (Left)","",21,2.5,new vector2(0,0),BT.PASSABLE,"none","futuralia"))
 	//blocks[BL.woodchairright] = new block("Wood Chair (Right)",TT.background_main,22,2.5,new vector2(0,0),BT.PASSABLE,11))
-	struct_set(futuralia,"wood_chair_right",new block("Wood Chair (Right)","",22,2.5,new vector2(0,0),BT.PASSABLE,"futuralia"))
+	struct_set(futuralia,"wood_chair_right",new block("Wood Chair (Right)","",22,2.5,new vector2(0,0),BT.PASSABLE,"none","futuralia"))
 	//blocks[BL.woodtable] = new block("Wood Table",TT.background_main,23,2.3,new vector2(0,0),BT.PASSABLE,12))
-	struct_set(futuralia,"wood_table",new block("Wood Table","",23,2.3,new vector2(0,0),BT.PASSABLE,"futuralia"))
+	struct_set(futuralia,"wood_table",new block("Wood Table","",23,2.3,new vector2(0,0),BT.PASSABLE,"none","futuralia"))
 	//blocks[BL.quartz] = new block("Quartz",TT.blocks_main,4,1.5,new vector2(0,0),BT.SOLID,13));}
 	/*
 	chanceArray = [
@@ -314,28 +315,28 @@ function worldgen_basegame() {
 		1/5*mult sugilite
 	]
 	*/
-	show_debug_message("Ore blocks init")
-	struct_set(futuralia,"quartz",new block("Quartz","",4,1.5,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(22,2,10)));
+	print("Ore blocks init")
+	struct_set(futuralia,"quartz",new block("Quartz","",4,1.5,new vector2(0,0),BT.SOLID,"ore","futuralia",new block_ore(22,2,10)));
 	//blocks[BL.emerald] = new block("Emerald",TT.blocks_main,5,1.4,new vector2(0,0),BT.SOLID,14);
-	struct_set(futuralia,"emerald",new block("Emerald","",5,1.4,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(21,2,12)));
+	struct_set(futuralia,"emerald",new block("Emerald","",5,1.4,new vector2(0,0),BT.SOLID,"ore","futuralia",new block_ore(21,2,12)));
 	//blocks[BL.citrine] = new block("Citrine",TT.blocks_main,6,1.3,new vector2(0,0),BT.SOLID,15);
-	struct_set(futuralia,"citrine",new block("Citrine","",6,1.3,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(18,3,18)));
+	struct_set(futuralia,"citrine",new block("Citrine","",6,1.3,new vector2(0,0),BT.SOLID,"ore","futuralia",new block_ore(18,3,18)));
 	//blocks[BL.diamond] = new block("Diamond",TT.blocks_main,7,1.2,new vector2(0,0),BT.SOLID,16);
-	struct_set(futuralia,"diamond",new block("Diamond","",7,1.2,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(17,3,20)));
+	struct_set(futuralia,"diamond",new block("Diamond","",7,1.2,new vector2(0,0),BT.SOLID,"ore","futuralia",new block_ore(17,3,20)));
 	//blocks[BL.amethyst] = new block("Amethyst",TT.blocks_main,8,1.1,new vector2(0,0),BT.SOLID,17);
-	struct_set(futuralia,"amethyst",new block("Amethyst","",8,1.1,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(15,4,24)));
+	struct_set(futuralia,"amethyst",new block("Amethyst","",8,1.1,new vector2(0,0),BT.SOLID,"ore","futuralia",new block_ore(15,4,24)));
 	//blocks[BL.onyx] = new block("Onyx",TT.blocks_main,9,1.0,new vector2(0,0),BT.SOLID,18);
-	struct_set(futuralia,"onyx",new block("Onyx","",9,1.0,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(13,5,32)));
+	struct_set(futuralia,"onyx",new block("Onyx","",9,1.0,new vector2(0,0),BT.SOLID,"ore","futuralia",new block_ore(13,5,32)));
 	//blocks[BL.ruby] = new block("Ruby",TT.blocks_main,10,0.9,new vector2(0,0),BT.SOLID,19);
-	struct_set(futuralia,"ruby", new block("Ruby","",10,0.9,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(9,6,44)));
+	struct_set(futuralia,"ruby", new block("Ruby","",10,0.9,new vector2(0,0),BT.SOLID,"ore","futuralia",new block_ore(9,6,44)));
 	//blocks[BL.sapphire] = new block("Sapphire",TT.blocks_main,11,0.8,new vector2(0,0),BT.SOLID,20));
-	struct_set(futuralia,"sapphire", new block("Sapphire","",11,0.8,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(5,8,72)));
+	struct_set(futuralia,"sapphire", new block("Sapphire","",11,0.8,new vector2(0,0),BT.SOLID,"ore","futuralia",new block_ore(5,8,72)));
 	//blocks[BL.jasper] = new block("Jasper",TT.blocks_main,12,0.7,new vector2(0,0),BT.SOLID,21));
-	struct_set(futuralia,"jasper",new block("Jasper","",12,0.7,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(3,11,112)));
+	struct_set(futuralia,"jasper",new block("Jasper","",12,0.7,new vector2(0,0),BT.SOLID,"ore","futuralia",new block_ore(3,11,112)));
 	//blocks[BL.tigerseye] = new block("Tiger's Eye",TT.blocks_main,13,0.6,new vector2(0,0),BT.SOLID,22));
-	struct_set(futuralia,"tigers_eye",new block("Tiger's Eye","",13,0.6,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(1,14,144)));
+	struct_set(futuralia,"tigers_eye",new block("Tiger's Eye","",13,0.6,new vector2(0,0),BT.SOLID,"ore","futuralia",new block_ore(1,14,144)));
 	//blocks[BL.sugilite] = new block("Sugilite",TT.blocks_main,14,0.5,new vector2(0,0),BT.SOLID,23));
-	struct_set(futuralia,"sugilite",new block("Sugilite","",14,0.5,new vector2(0,0),BT.SOLID,"futuralia",new block_ore(1/5,16,256)));
+	struct_set(futuralia,"sugilite",new block("Sugilite","",14,0.5,new vector2(0,0),BT.SOLID,"ore","futuralia",new block_ore(1/5,16,256)));
 	
 	//_bl = {
 	//	fixed: futuralia
@@ -659,8 +660,6 @@ function cave_gen(fillPercent,seed) {
 }
 
 function tst_create(){
-	worldgen_move_files()
-	worldgen_basegame();
 	//first is position in region, second is size in chunks on a vector2
 	//chunk size = 32 blocks
 	//region size = 16 chunks (regions are not repeated on y axis, only x)
@@ -697,7 +696,7 @@ function tst_save() {
 		strength_to_rebirth: oPlayer2.strength_to_rebirth
 	}
 	var playerJson = json_stringify(playerData);
-	show_debug_message(playerJson)
+	print(playerJson)
 	//make buffer
 	var buff1 = buffer_create(768,buffer_grow,1);
 	buffer_seek(buff1,buffer_seek_start,0)
@@ -740,7 +739,7 @@ function tst_load(){
 	var decompbuff1 = buffer_decompress(buff1)
 	var str1 = buffer_read(decompbuff1,buffer_string);
 	var playerData = json_parse(str1);
-	show_debug_message(playerData)
+	print(playerData)
 	BLGLOBAL = loadStructs(DEFAULTPATH + "active_blocks-" + string(worldSlot))
 	blockArray = array;
 	chunkArray = loadStructs(DEFAULTPATH + "chunks-" + string(worldSlot));
@@ -789,7 +788,7 @@ exception_unhandled_handler(function(ex)
     // Show the error message (for debug purposes only)
     //show_message("Game crashed. Please report this. " + ex.longMessage);
 	//yeah the game crashes fuck you im not playing it -1000 social credit
-	show_debug_message(ex.longMessage);
+	print(ex.longMessage);
     return 0;
 });
 
@@ -816,52 +815,52 @@ function create_button(_x,_y,_width,_height,_text,_script,_group) {
 
 function ws_tiny() {
 	oSettings.subselector[ST.size] = WS.tiny;
-	show_debug_message("Chunk size set to tiny")
+	print("Chunk size set to tiny")
 }
 
 function ws_medium() {
 	oSettings.subselector[ST.size] = WS.medium;
-	show_debug_message("Chunk size set to medium")
+	print("Chunk size set to medium")
 }
 
 function ws_large() {
 	oSettings.subselector[ST.size] = WS.large;
-	show_debug_message("Chunk size set to large")
+	print("Chunk size set to large")
 }
 
 function ws_giant() {
 	oSettings.subselector[ST.size] = WS.giant;
-	show_debug_message("Chunk size set to giant")
+	print("Chunk size set to giant")
 }
 
 function ws_extreme() {
 	oSettings.subselector[ST.size] = WS.extreme;
-	show_debug_message("Chunk size set to extreme")
+	print("Chunk size set to extreme")
 }
 
 function wl_1() {
 	worldSlot = 1;
-	show_debug_message("World Slot Changed: " + string(worldSlot));
+	print("World Slot Changed: " + string(worldSlot));
 }
 
 function wl_2() {
 	worldSlot = 2;
-	show_debug_message("World Slot Changed: " + string(worldSlot));
+	print("World Slot Changed: " + string(worldSlot));
 }
 
 function wl_3() {
 	worldSlot = 3;
-	show_debug_message("World Slot Changed: " + string(worldSlot));
+	print("World Slot Changed: " + string(worldSlot));
 }
 
 function wl_4() {
 	worldSlot = 4;
-	show_debug_message("World Slot Changed: " + string(worldSlot));
+	print("World Slot Changed: " + string(worldSlot));
 }
 
 function wl_5() {
 	worldSlot = 5;
-	show_debug_message("World Slot Changed: " + string(worldSlot));
+	print("World Slot Changed: " + string(worldSlot));
 }
 
 function st_load() {

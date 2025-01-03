@@ -12,8 +12,8 @@
   "duration":0.276167,
   "name":"snd_footstep_solid1",
   "parent":{
-    "name":"SFX",
-    "path":"folders/Sounds/SFX.yy",
+    "name":"footstep",
+    "path":"folders/Sounds/SFX/footstep.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

@@ -50,7 +50,7 @@ clmp = 0;
 ground_check = function() {
 	var _inst = instance_place(x,y+1,oSolid);
 	with (_inst) {
-		other.material_last = material;
+		other.material_last = blockArray[index]._material;
 	}
 }
 
@@ -98,3 +98,11 @@ playerclock.DefineInput("run",false);
 playerclock.DefineInputMomentary("jump_press",false);
 
 playerclock.AddTickUserEvents(undefined,14,undefined);
+
+indicator_text = "";
+indicator_alpha = 0;
+
+indicator = function(text = "") {
+	indicator_text = text;
+	indicator_alpha = 256;
+}

@@ -12,8 +12,8 @@
   "duration":0.639542,
   "name":"snd_footstep_grass1",
   "parent":{
-    "name":"SFX",
-    "path":"folders/Sounds/SFX.yy",
+    "name":"footstep",
+    "path":"folders/Sounds/SFX/footstep.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

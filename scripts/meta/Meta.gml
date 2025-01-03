@@ -1,5 +1,6 @@
 //begteam
 #macro GMSPD 60
+#macro LOGFILE "futuralialog-latest.txt"
 
 function image_id(_sprite,_index) constructor {
 	sprite_index = _sprite;
@@ -166,7 +167,7 @@ function tool(name,toolMode,toolPower,toolSpeed,extra) constructor {
 	}
 }
 
-function block(name,sprite_img,imgindex,resistance,position,blocktype,modadding = "futuralia",blockore = new block_ore(100,0,0)) constructor {
+function block(name,sprite_img,imgindex,resistance,position,blocktype,block_material = "none",modadding = "futuralia",blockore = new block_ore(100,0,0)) constructor {
 	_modid = modadding
 	nm = name;
 	spr = sprite_img;
@@ -175,6 +176,7 @@ function block(name,sprite_img,imgindex,resistance,position,blocktype,modadding 
 	pos = position;
 	bt = blocktype;
 	_blockore = blockore
+	_material = block_material;
 	//ext = {
 	//	func1 : undefined,
 	//	func2 : undefined,
@@ -258,4 +260,13 @@ function subskill(_name,_index, _parent, _level) constructor {
 	static Copy = function() {
 		return new subskill(name, index, parent, level);
 	}
+}
+
+function print(_text) {
+	show_debug_message(_text);
+	var _file = file_text_open_append(LOGFILE)
+	var _timestamp = date_datetime_string(date_current_datetime());
+	file_text_writeln(_file);
+	file_text_write_string(_file,"[" + _timestamp + "]: " + string(_text));
+	file_text_close(_file);
 }

@@ -1,4 +1,6 @@
 //begteam
+print("Futuralia, " + GAMEVER);
+print("Initializing game");
 #macro BLOCKSTRIP 34
 globalvar settingsArray, finalWorldSize, finalDifficulty, spriteArray, sprload, worldSlot;
 settingsArray = [];

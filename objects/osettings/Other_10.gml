@@ -10,7 +10,7 @@ if (file_exists("settings")) {
 	ini_close();
 	//||||||||||||||||||||||||||||||
 	
-	show_debug_message("going to generate world")
+	print("going to generate world")
 	
 	alarm[0] = 4;
 } else {

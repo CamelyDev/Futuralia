@@ -1,5 +1,5 @@
 #macro FPI_MAX 2
-#macro MAX_BLOCKSELECTOR 10
+#macro MAX_BLOCKSELECTOR 6
 
 image_speed = 0;
 

@@ -27,6 +27,5 @@ input_hue = 0;
 input_saturation = 0;
 
 isCollision = true;
-material = "solid"
 
 alarm[1] = 1;

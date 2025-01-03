@@ -20,8 +20,12 @@ switch(blocktype) {
 	default: isCollision = true; mask_index = sMask2; break;
 }
 
-switch(blockname) {
-	case "Grass Block": material = "grass"; break;
-	case "Dirt": material = "dirt"; break;
-	default: material = "solid"; break;
-}
+//switch(blockname) {
+//	//case "Grass Block": material = "grass"; break;
+//	//case "Dirt": material = "dirt"; break;
+//	//case "Stone": material = "rock"; break;
+//	//case "Brick": material = "rock"; break;
+//	//case "Wood Planks": material = "solid"; break;
+//	//case "Wo": material = "solid"; break;
+//	//default: material = "ore"; break;
+//}

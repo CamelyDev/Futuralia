@@ -6,6 +6,8 @@ y = snapp(main_cam.get_mouse_y(), BS);
 if (curselector > MAX_BLOCKSELECTOR) curselector = 0;
 if (curselector < 0) curselector = MAX_BLOCKSELECTOR;
 
+//removed transparent blocks for now
+
 switch(curselector) {
 	case 0: {
 		curblock = undefined
@@ -20,34 +22,18 @@ switch(curselector) {
 	} break;
 	
 	case 3: {
-		curblock = BLGLOBAL.futuralia.fixed.wood_wall
-	} break;
-	
-	case 4: {
-		curblock = BLGLOBAL.futuralia.fixed.wood_chair_left
-	} break;
-	
-	case 5: {
-		curblock = BLGLOBAL.futuralia.fixed.wood_chair_right
-	} break;
-	
-	case 6: {
-		curblock = BLGLOBAL.futuralia.fixed.wood_table
-	} break;
-	
-	case 7: {
 		curblock = BLGLOBAL.futuralia.fixed.wood_slab_up
 	} break;
 	
-	case 8: {
+	case 4: {
 		curblock = BLGLOBAL.futuralia.fixed.wood_slab_down
 	} break;
 	
-	case 9: {
+	case 5: {
 		curblock = BLGLOBAL.futuralia.fixed.wood_slab_left
 	} break;
 	
-	case 10: {
+	case 6: {
 		curblock = BLGLOBAL.futuralia.fixed.wood_slab_right
 	} break;
 }
