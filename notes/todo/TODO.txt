@@ -1,69 +1,16 @@
-skill tree:
+//Blocks save/compress method
+//- Blocks are saved, but separated by chunks (blocks0-1.ini for chunk X0)
+//- 48 blocks for every chunk (meaning 114 bytes avg X 48)
+//- Every chunkname is saved in chunks.ini, indicating where it should load the corresponding blockX.ini
+//- Use buffers with type buffer_grow to store the chunk in blocks and compress it (12288 bytes approx)
 
-Root:
-Patience
-	Melee
-		Sword
-			Sword Agility
-				Sword Speed
-					Hand Skill
-				Sword Power
-				Sword Swiftness
-			Sword Strength
-				Sword Damage
-					Sword Rate
-				Sword Hit
-					Sword Crit
-		Axe
-			Axe Agility
-				Axe Blocking
-					Rocky Hands
-				Axe Rate
-					Fast Biceps
-			Axe Strength
-				Axe Damage
-					Axe Rate
-				Axe Hit
-					Axe Crit
-				Axe Dodge (0.0.5)
-		Trident (0.0.7)
-		Shield
-			Shield Blocking
-				Double Wielding
-		Curved Sword (0.1.0?)
-	Ranged (0.0.5)
-		Bow (0.0.5)
-		Spear (0.0.6)
-		Crossbow (0.0.5)
-		Gun (0.0.7)
-		Armory (0.0.6)
-Inteligence (0.0.9)
-	Summon (0.0.9)
-	Magic (0.1.0)
-	Psychological (0.2.0?)
-
-Ultimatums:
-- Ultimate Sword Strength [14]: Requires 11 and 13.
-- Ultimate Sword Agility [8]: Requires 5, 6 and 7.
-- Ultimate Sword Warrior [15]: Requires 8 and 14.
-- Ultimate Axe Warrior [27]: Requires 26, 24, 21 and 19.
-- Legendary Axe Knight [31]: Requires 27 and 30.
-- Legendary Sword Knight [32]: Requirees 15 and 30.
-- Mythical King [33]: Requires 32 and 31.
-
-Blocks save/compress method
-- Blocks are saved, but separated by chunks (blocks0-1.ini for chunk X0)
-- 48 blocks for every chunk (meaning 114 bytes avg X 48)
-- Every chunkname is saved in chunks.ini, indicating where it should load the corresponding blockX.ini
-- Use buffers with type buffer_grow to store the chunk in blocks and compress it (12288 bytes approx)
-
-Blocks load/uncompress method
-- First load chunks.ini and run a for loop with the size of the world / chunksize
-- Every loop:
-	- read the chunk value
-	- load the corresponding blocks file
-	- uncompress buffer and read
-	- add to blocks array
+//Blocks load/uncompress method
+//- First load chunks.ini and run a for loop with the size of the world / chunksize
+//- Every loop:
+//	- read the chunk value
+//	- load the corresponding blocks file
+//	- uncompress buffer and read
+//	- add to blocks array
 
 1. finish skill tree ---- WIP
 2. iota everything before it's too late
@@ -72,19 +19,19 @@ Blocks load/uncompress method
 5. finish the goddamn menu ---- WIP
 6. make a giant reeverb for the dont forget ost instead of the sudden change
 7. start inventory system
-8. persistent object holding the block array
+8. persistent object holding the block array --- WON'T DO
 9. fix wall collision
 10. cave gen using cellular automata noise
-11. move to tilemaps instead of instances
-12. Multiple worlds
-13. Organize arrays in chunks instead of 1 big array
-14. fast Lighting System using the blocklight script
-15. parse blocks and stuff from json into the blockarray
-16. game logic: mine stuff, gain level. with more level, mine more stuff. with more stuff, sell and rebirth.
-17. once a button is selected on the menu, keep it green until you select another one (remember which option you chose)
+11. move to tilemaps instead of instances ---- WON'T DO
+12. Multiple worlds --- DONE (slot system)
+13. Organize arrays in chunks instead of 1 big array --- WON'T DO YET
+14. fast Lighting System using the blocklight script --- WON'T DO (each block is fast enough)
+15. parse blocks and stuff from json into the blockarray --- DONE
+16. game logic: mine stuff, gain level. with more level, mine more stuff. with more stuff, sell and rebirth. --- DONE
+17. once a button is selected on the menu, keep it green until you select another one (remember which option you chose) --- DONE
 18. in-game modding at runtime
 19. options menu
-20. when you fall down, go back up
-21. player talking for ingame stuff (i cant mine that yet, i need to rebirth, etc)
-22. xp sound
-23. different break sounds
+20. when you fall down, go back up --- DO NE
+21. player talking for ingame stuff (i cant mine that yet, i need to rebirth, etc) --- DONE
+22. xp sound --- DONE
+23. different break sounds --- DONE

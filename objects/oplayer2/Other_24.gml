@@ -160,7 +160,7 @@ if (max_tm) {
 //----EXTRAS----
 mask_index = sPlayerMask;
 
-if (y > (HEIGHT + 64)* BS) {
+if (y > (HEIGHT + 256)* BS) {
 	y = -512;
 	print("Going back up");
 }

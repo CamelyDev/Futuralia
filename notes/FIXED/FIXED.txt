@@ -1,4 +1,5 @@
 (since v0.0.21)
+
 ADD & FIX:
 fixed player walk sprite and made it worse
 fixed the foosteps sounds being too loud
@@ -13,6 +14,19 @@ made the camera a little more zoomed in
 fixed the walking animation again and made it horrible
 fixed the progression being so slow
 fixed the reach being way too much blocks
+
 TODO:
-fix the sprite breaking bug when you add resources to the project
+fix the sprite breaking bug when you add resources to the project --- DONE (sprite regen)
+
 (since v0.0.22)
+
+ADD, REMOVE & FIX:
+fixed the out of bounds cursor sprite being the old value instead of the new one
+fixed the sprite bug when changing stuff inside the project (?
+fixed the show_debug_message and replaced it with a log in %APPDATA%
+fixed the alpha values for the player texts being negative
+fixed the player infinitely falling down (now it falls back up)
+added different footstep sounds
+added different block break sounds
+removed the bg blocks temporarily
+added materials to each block
