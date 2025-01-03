@@ -29,6 +29,7 @@ function worldgen_create_sprites(bl_struct, mod_filename) {
 }
 
 function worldgen_regen_sprites(bl_struct, mods_array) {
+	print("About to regenerate sprite textures");
 	for (var i = 0; i < array_length(mods_array); i++) {
 		var mod_name = mods_array[i];
 		var _str1 = variable_struct_get(bl_struct,mod_name)
@@ -218,7 +219,7 @@ function worldgen_init() {
 		hoe,
 		shovel
 	}
-	globalvar worldArray, regionArray, chunkArray, blockArray, currentPos, blocks, items, spriteBlocks, BLGLOBAL, CHANCES, __TEMP;
+	globalvar worldArray, regionArray, chunkArray, blockArray, currentPos, blocks, items, spriteBlocks, BLGLOBAL, CHANCES, __TEMP, MODS_LOADED;
 	//blockGrid = ds_grid_create(finalWorldSize * CHUNKSIZE,HEIGHT);
 	regionArray = array_create(0);
 	chunkArray = array_create(0);
@@ -227,15 +228,13 @@ function worldgen_init() {
 	currentPos = 0;
 	__TEMP = ""
 	blocks = array_create(0);
-	var mods = worldgen_list_mods(MODPATH);
-	BLGLOBAL = worldgen_parse_mods(mods);
+	MODS_LOADED = worldgen_list_mods(MODPATH);
+	BLGLOBAL = worldgen_parse_mods(MODS_LOADED);
 	print(BLGLOBAL)
 	items = array_create(10);
 	CHANCES = array_create(0)
 	//array_pop(CHANCES);
 	worldgen_define_chances_ores(BLGLOBAL)
-	print("About to regen sprites")
-	worldgen_regen_sprites(BLGLOBAL,mods)
 }
 
 function worldgen_save_mod(_mod, _mod_name = "futuralia") {
@@ -816,59 +815,96 @@ function create_button(_x,_y,_width,_height,_text,_script,_group) {
 function ws_tiny() {
 	oSettings.subselector[ST.size] = WS.tiny;
 	print("Chunk size set to tiny")
+	return true;
 }
 
 function ws_medium() {
 	oSettings.subselector[ST.size] = WS.medium;
 	print("Chunk size set to medium")
+	return true;
 }
 
 function ws_large() {
 	oSettings.subselector[ST.size] = WS.large;
 	print("Chunk size set to large")
+	return true;
 }
 
 function ws_giant() {
 	oSettings.subselector[ST.size] = WS.giant;
 	print("Chunk size set to giant")
+	return true;
 }
 
 function ws_extreme() {
 	oSettings.subselector[ST.size] = WS.extreme;
 	print("Chunk size set to extreme")
+	return true;
 }
 
 function wl_1() {
 	worldSlot = 1;
 	print("World Slot Changed: " + string(worldSlot));
+	return true;
 }
 
 function wl_2() {
 	worldSlot = 2;
 	print("World Slot Changed: " + string(worldSlot));
+	return true;
 }
 
 function wl_3() {
 	worldSlot = 3;
 	print("World Slot Changed: " + string(worldSlot));
+	return true;
 }
 
 function wl_4() {
 	worldSlot = 4;
 	print("World Slot Changed: " + string(worldSlot));
+	return true;
 }
 
 function wl_5() {
 	worldSlot = 5;
 	print("World Slot Changed: " + string(worldSlot));
+	return true;
 }
 
 function st_load() {
-	with (oSettings) event_user(0);
+	with (oSettings) {
+		if (file_exists("world-"+string(worldSlot))) {
+			print("Loading world, slot " + string(worldSlot));
+			event_user(0);
+			return true;
+		}
+	}
+	show_message("There's no world created for this slot.\nPlease, create a new world.")
+	print("No world to load for slot" + string(worldSlot));
+	return false;
 }
 
 function st_create() {
-	with (oSettings) event_user(1);
+	with (oSettings) {
+		if (!file_exists("world-"+string(worldSlot))) {
+			print("Creating world for slot" + string(worldSlot));
+			event_user(1);
+			return true;
+		} else {
+			print("World already exists for slot " + string(worldSlot));
+			var _q = show_question("A world has been already created for slot "+string(worldSlot) + ".\nDo you want to create a new world in this same slot?")
+			if _q {
+				print("Replacing world for slot " + string(worldSlot));
+				event_user(1);
+				return true;
+			} else {
+				print("Cancelled world replacement for slot " + string(worldSlot));
+				return false;
+			}
+		}
+	}
+	return false;
 }
 
 //why so serious?

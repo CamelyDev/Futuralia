@@ -11,6 +11,7 @@ if (mouse_check_button(mb_left)) and (distance_to_object(oCursor) < 1) and (dist
 			fsi--;
 		}
 	} else {
+		oPlayer2.indicator("I can't mine this yet.\nI need to get stronger.");
 		mining = false;
 		fsi = 8;
 	}

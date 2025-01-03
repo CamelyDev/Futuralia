@@ -162,6 +162,7 @@ mask_index = sPlayerMask;
 
 if (y > (HEIGHT + 64)* BS) {
 	y = -512;
+	print("Going back up");
 }
 
 //switch(image_index) {
@@ -170,6 +171,11 @@ if (y > (HEIGHT + 64)* BS) {
 //	case 2: head_offset = 1; break;
 //	case 3: head_offset = 0; break;
 //}
+
+if (check_rebirth() == true) and (can_rebirth == false) {
+	indicator("I can rebirth now.\nI'm strong enough.");
+	can_rebirth = true;
+}
 
 if (rest_xp > 0) {
 	xp++;

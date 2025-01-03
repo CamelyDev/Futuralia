@@ -6,9 +6,13 @@ click = lerp(click, _click, 0.2);
 y = lerp(y,ystart - _hover * 8, 0.1);
 
 if (_click and scr >= 0) {
-	scr()
+	var _state = scr()
 	with (oButton) {
 		if (group == other.group) text_color = c_black;
 	}
-	text_color = c_lime;
+	if (_state == true) {
+		text_color = c_lime;
+	} else {
+		text_color = c_red;
+	}
 }

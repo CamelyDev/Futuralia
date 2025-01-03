@@ -14,27 +14,7 @@ rest_xp = 0;
 strength_bonus = 1;
 got_stronger = 0;
 rebirthed = 0;
-
-xp_curve = function() {
-	var _xp_pow = round(power(8*(strength+1),1.1495));
-	return _xp_pow;
-}
-
-xp_add = function(n) {
-	rest_xp+=n;
-}
-
-xp_max = xp_curve()
-
-make_rebirth = function() {
-	if (strength >= strength_to_rebirth) {
-		rebirths++;
-		strength = 0;
-		strength_to_rebirth += 4;
-		rebirthed = 256;
-		audio_play_sound(snd_rebirth,1,false);
-	}
-}
+can_rebirth = false;
 
 zoo = 1;
 grav = 0.3;
@@ -46,13 +26,6 @@ msp = 2.5;
 jumps = 0;
 
 clmp = 0;
-
-ground_check = function() {
-	var _inst = instance_place(x,y+1,oSolid);
-	with (_inst) {
-		other.material_last = blockArray[index]._material;
-	}
-}
 
 material_last = "solid";
 
@@ -106,3 +79,42 @@ indicator = function(text = "") {
 	indicator_text = text;
 	indicator_alpha = 256;
 }
+
+check_rebirth = function() {
+	if (strength >= strength_to_rebirth) {
+		return true
+	} else {
+		return false
+	}
+}
+
+make_rebirth = function() {
+	if check_rebirth() {
+		rebirths++;
+		strength = 0;
+		strength_to_rebirth += 4;
+		rebirthed = 256;
+		can_rebirth = false;
+		audio_play_sound(snd_rebirth,1,false);
+	} else {
+		indicator("I can't rebirth yet.\nI need to get stronger.");
+	}
+}
+
+xp_curve = function() {
+	var _xp_pow = round(power(8*(strength+1),1.1495));
+	return _xp_pow;
+}
+
+xp_add = function(n) {
+	rest_xp+=n;
+}
+
+ground_check = function() {
+	var _inst = instance_place(x,y+1,oSolid);
+	with (_inst) {
+		other.material_last = blockArray[index]._material;
+	}
+}
+
+xp_max = xp_curve()
