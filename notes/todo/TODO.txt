@@ -31,7 +31,8 @@
 17. once a button is selected on the menu, keep it green until you select another one (remember which option you chose) --- DONE
 18. in-game modding at runtime
 19. options menu
-20. when you fall down, go back up --- DO NE
+20. when you fall down, go back up --- DONE
 21. player talking for ingame stuff (i cant mine that yet, i need to rebirth, etc) --- DONE
 22. xp sound --- DONE
 23. different break sounds --- DONE
+24. quest progression system

@@ -1,0 +1,1 @@
+if (is_callable(scripts_runtime.create_event)) scripts_runtime.create_event();

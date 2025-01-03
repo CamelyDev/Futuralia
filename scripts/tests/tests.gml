@@ -264,6 +264,11 @@ function worldgen_oredlc() {
 	worldgen_save_mod(mo_ores,"mo_ores");
 }
 
+function add_sprite(_mod_id,_filename_noext,_origin_x,_origin_y) {
+	var _spr = sprite_add(MODPATH + _mod_id + "/" + _filename_noext + ".png", 1,false,false,_origin_x,_origin_y);
+	return _spr;
+}
+
 function worldgen_basegame() {
 	futuralia = {
 		

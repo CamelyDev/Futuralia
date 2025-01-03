@@ -1,0 +1,1 @@
+if (is_callable(scripts_runtime.step_event)) scripts_runtime.step_event();

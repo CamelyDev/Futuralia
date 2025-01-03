@@ -1,0 +1,1 @@
+if (is_callable(scripts_runtime.gui_event)) scripts_runtime.gui_event();

@@ -90,6 +90,7 @@
     {"id":{"name":"oChecker","path":"objects/oChecker/oChecker.yy",},},
     {"id":{"name":"oCol","path":"objects/oCol/oCol.yy",},},
     {"id":{"name":"oCursor","path":"objects/oCursor/oCursor.yy",},},
+    {"id":{"name":"oCustomObject","path":"objects/oCustomObject/oCustomObject.yy",},},
     {"id":{"name":"oInventorySystem","path":"objects/oInventorySystem/oInventorySystem.yy",},},
     {"id":{"name":"oLight","path":"objects/oLight/oLight.yy",},},
     {"id":{"name":"oMusicSystem","path":"objects/oMusicSystem/oMusicSystem.yy",},},

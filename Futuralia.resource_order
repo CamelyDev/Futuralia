@@ -65,6 +65,7 @@
     {"name":"oChecker","order":7,"path":"objects/oChecker/oChecker.yy",},
     {"name":"oCol","order":8,"path":"objects/oCol/oCol.yy",},
     {"name":"oCursor","order":2,"path":"objects/oCursor/oCursor.yy",},
+    {"name":"oCustomObject","order":13,"path":"objects/oCustomObject/oCustomObject.yy",},
     {"name":"oInventorySystem","order":3,"path":"objects/oInventorySystem/oInventorySystem.yy",},
     {"name":"oLight","order":9,"path":"objects/oLight/oLight.yy",},
     {"name":"oMusicSystem","order":6,"path":"objects/oMusicSystem/oMusicSystem.yy",},

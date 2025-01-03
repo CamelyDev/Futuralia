@@ -167,7 +167,7 @@ function tool(name,toolMode,toolPower,toolSpeed,extra) constructor {
 	}
 }
 
-function block(name,sprite_img,imgindex,resistance,position,blocktype,block_material = "none",modadding = "futuralia",blockore = new block_ore(100,0,0)) constructor {
+function block(name,sprite_img,imgindex,resistance,position,blocktype,block_material = "none",modadding = "futuralia",blockore = new block_ore(100,0,0),custom_object_struct = -1) constructor {
 	_modid = modadding
 	nm = name;
 	spr = sprite_img;
@@ -177,6 +177,7 @@ function block(name,sprite_img,imgindex,resistance,position,blocktype,block_mate
 	bt = blocktype;
 	_blockore = blockore
 	_material = block_material;
+	_obj_struct = custom_object_struct;
 	//ext = {
 	//	func1 : undefined,
 	//	func2 : undefined,

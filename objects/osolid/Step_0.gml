@@ -31,6 +31,11 @@ if (mouse_check_button(mb_left)) and (distance_to_object(oCursor) < 1) and (dist
 //var bc = block_check(x,y,block_radius)
 
 if (dest >= 1) {
+	if (blockArray[index]._obj_struct > 0) {
+		var _object = instance_create_depth(x,y,depth,oCustomObject,{
+			scripts_runtime: blockArray[index]._obj_struct
+		});
+	}
 	var sound = snd_none;
 	var _t = choose(1,2);
 	if (_t == 1) {
@@ -56,6 +61,7 @@ if (dest >= 1) {
 			xp_to_add: blockArray[index]._blockore._drop_xp
 		});
 	}
+	
 	blockArray[index] = 0;
 	instance_destroy();
 	//oPlayer2.xp_add(blockArray[index]._blockore._drop_xp);

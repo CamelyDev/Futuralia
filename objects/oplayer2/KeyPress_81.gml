@@ -1,3 +1,3 @@
 //begteam
 
-game_set_speed(25,gamespeed_fps)
+//game_set_speed(25,gamespeed_fps)
