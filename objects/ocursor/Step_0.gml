@@ -106,7 +106,7 @@ if (fpi > 0) fpi--;
 
 //if (fdi > 0) fdi--;
 
-if (distance_to_object(oPlayer2) >= 8*BS) {
+if (distance_to_object(oPlayer2) >= 4*BS) {
 	curstate = CURSORSTATE.OOB;
 }
 
