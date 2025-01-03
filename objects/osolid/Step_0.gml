@@ -30,6 +30,26 @@ if (mouse_check_button(mb_left)) and (distance_to_object(oCursor) < 1) and (dist
 //var bc = block_check(x,y,block_radius)
 
 if (dest >= 1) {
+	var sound = snd_none;
+	var _t = choose(1,2);
+	if (_t == 1) {
+		switch(blockArray[index]._material) {
+			case "plant": sound = snd_dirtbreak1; break;
+			case "rock": sound = snd_stonebreak1; break;
+			case "solid": sound = snd_solidbreak1; break;
+			case "ore": sound = snd_orebreak1; break;
+			default: sound = snd_none; break;
+		}
+	} else {
+		switch(blockArray[index]._material) {
+			case "plant": sound = snd_dirtbreak2; break;
+			case "rock": sound = snd_stonebreak2; break;
+			case "solid": sound = snd_solidbreak2; break;
+			case "ore": sound = snd_orebreak2; break;
+			default: sound = snd_none; break;
+		}
+	}
+	audio_play_sound(sound,4,false,random_range(0.8,1),0,random_range(0.9,1.1));
 	if (blockArray[index]._blockore._drop_xp != 0) {
 		instance_create_depth(x+4,y+4,depth,oXpCrumb,{
 			xp_to_add: blockArray[index]._blockore._drop_xp

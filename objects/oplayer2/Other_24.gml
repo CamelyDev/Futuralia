@@ -160,6 +160,10 @@ if (max_tm) {
 //----EXTRAS----
 mask_index = sPlayerMask;
 
+if (y > (HEIGHT + 64)* BS) {
+	y = -512;
+}
+
 //switch(image_index) {
 //	case 0: head_offset = 1; break;
 //	case 1: head_offset = 2; break;
@@ -184,3 +188,4 @@ if (xp_max - show_xp <= 0) {
 }
 if (got_stronger > 0) got_stronger -= 2;
 if (rebirthed > 0) rebirthed--;
+if (indicator_alpha > 0) indicator_alpha--;

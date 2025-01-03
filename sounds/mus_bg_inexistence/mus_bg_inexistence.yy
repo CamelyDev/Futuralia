@@ -21,5 +21,5 @@
   "sampleRate":44100,
   "soundFile":"mus_bg_inexistence.wav",
   "type":0,
-  "volume":0.01,
+  "volume":0.0,
 }

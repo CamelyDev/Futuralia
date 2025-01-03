@@ -22,4 +22,9 @@ if (got_stronger > 0) and (rebirthed <= 0) {
 	draw_set_alpha(rebirthed/256);
 	draw_text(x,y-27,"REBIRTH NUMBER " + string(rebirths) + " ACTIVE.");
 }
+draw_set_font(fnt1);
+draw_set_color(c_red);
+draw_set_alpha(indicator_alpha/256);
+draw_text(x,y-27,indicator_text);
+draw_set_color(c_white)
 draw_set_alpha(1);

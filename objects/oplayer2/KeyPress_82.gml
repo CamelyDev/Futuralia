@@ -10,4 +10,4 @@ if (_inst != noone) {
 }
 var w = camera_get_view_width(view_camera[0]) / 2;
 var s = ((finalWorldSize*CHUNKSIZE)-(w/BS) * BS)
-show_debug_message(s)
+print(s)
