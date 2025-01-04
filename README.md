@@ -1,3 +1,5 @@
+# IMPORTANT NOTICE
+Go to [https://github.com/CamelyDev/Futuralia/tree/ptb] if you want to see the latest changes.
 # Futuralia
 A mining simulator game made in GMS2, with a psychological horror twist (that, sadly, hasn't been implemented yet).
 The game consists of five main habits you need to teach to the character. These consists of:
